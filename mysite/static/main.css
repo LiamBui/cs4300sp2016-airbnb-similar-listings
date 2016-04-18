@@ -11,6 +11,8 @@ text-align:center;
 body {
 padding-top: 15%;
 padding-bottom: 15px;
+background-image: url('NYSkyline.jpeg');;
+
 }
 .global-search {
 text-align:center;
@@ -19,6 +21,13 @@ padding:10px;
 .global-search .form-control {
 width:500px;
 }
+.titleandsearch{
+background-color: rgba(255,255,255,0.8);
+padding-right: 5%;
+padding-left: 5%;
+padding-bottom: 3%;
+border-radius: 10px;
+}
 .global-search * {
 display:inline-block;
 margin-bottom:0;
@@ -26,12 +35,19 @@ margin-bottom:0;
 }
 .topcorner{
 position:absolute;
-top:2%;
-right:2%;
+top:1%;
+right:1%;
+}
+.topcorner p{
+	margin: 0 0 0px;
+	color: #FFF;
 }
 .btn{
-background-color: #4285F4;
+background-color: #2EC4B6;
 border: none
+}
+a.btn a:hover{
+	backgroud-color:#011627;
 }
 .step-links a{
 color: #4285F4;
