@@ -2,6 +2,12 @@ from .models import Docs
 import os
 import Levenshtein
 import json
+import numpy as np
+from sklearn.metrics.pairwise import distance_metrics
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+import urllib2
+import csv
 
 
 def read_file(n):
