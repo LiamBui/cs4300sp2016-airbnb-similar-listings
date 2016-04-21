@@ -31,12 +31,10 @@ def _edit(query, msg):
 
 def find_similar(input_description):
 	with open('data/filtered_nyc_listings.csv') as f:
-    NYClistings = [{k: v for k, v in row.items()}
-      for row in csv.DictReader(f, skipinitialspace=True)]
+    NYClistings = [{k: v for k, v in row.items()} for row in csv.DictReader(f, skipinitialspace=True)]
         
 	with open('data/filtered_sf_listings.csv') as f:
-	  SFlistings = [{k: v for k, v in row.items()}
-			for row in csv.DictReader(f, skipinitialspace=True)]
+	  SFlistings = [{k: v for k, v in row.items()} for row in csv.DictReader(f, skipinitialspace=True)]
 	        
 	descript_dict = {}
 	for n in NYClistings:
