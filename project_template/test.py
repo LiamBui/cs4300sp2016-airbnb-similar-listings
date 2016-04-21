@@ -31,7 +31,7 @@ def _edit(query, msg):
 
 def find_similar(input_description):
 	with open('data/filtered_nyc_listings.csv') as f:
-  	NYClistings = [{k: v for k, v in row.items()} for row in csv.DictReader(f, skipinitialspace=True)]
+		NYClistings = [{k: v for k, v in row.items()} for row in csv.DictReader(f, skipinitialspace=True)]
 
 	with open('data/filtered_sf_listings.csv') as f:
 		SFlistings = [{k: v for k, v in row.items()} for row in csv.DictReader(f, skipinitialspace=True)]
@@ -41,10 +41,10 @@ def find_similar(input_description):
 		key = n['id']
 		descript_dict[key]=n['description']
 	for s in SFlistings:
-  	key = s['id']
-  	descript_dict[key]=s['description']
+		key = s['id']
+		descript_dict[key]=s['description']
 
-  n_feats = 5000
+	n_feats = 5000
 	descriptions = [input_description]+ [descript_dict[d] for d in descript_dict]
 	listing_by_vocab = np.empty((len(descriptions), n_feats))
 
