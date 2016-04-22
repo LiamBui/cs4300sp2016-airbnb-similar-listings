@@ -36,15 +36,13 @@
                                 {{ listing.name }}
                             </a>
                         </div>
-                        <div class="listing-accom"></div>
-                        <div class="listing-bedrooms"></div>
-                        <div class="listing-price"></div>
+                        <div class="listing-accom">{{ listing.accommodates }}</div>
+                        <div class="listing-bedrooms">{{ listing.bedrooms }}</div>
+                        <div class="listing-price">{{ listing.price }}</div>
 
                     </div>
-                    <div class = "listing-description"></div>
-                    <div class = "listing-summary"></div>
-
-                    {{listing}}<br>
+                    <div class = "listing-description">{{listing.description}}</div>
+                    <div class = "listing-summary">{{ listing.summary }}</div><br>
                 </div>
             {% endfor %}
             
