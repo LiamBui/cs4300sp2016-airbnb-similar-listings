@@ -7,8 +7,7 @@ from sklearn.metrics.pairwise import distance_metrics
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import urllib2
-import csv
-
+import urls
 
 def read_file(n):
 	path = Docs.objects.get(id = n).address;
@@ -29,12 +28,6 @@ def _edit(query, msg):
 #
 #	return sorted(result, key=lambda tup: tup[0])
 
-with open('data/filtered_nyc_listings.csv') as f:
-   	NYClistings = [{k: v for k, v in row.items()} for row in csv.DictReader(f, skipinitialspace=True)]
-        
-with open('data/filtered_sf_listings.csv') as f:
-	SFlistings = [{k: v for k, v in row.items()} for row in csv.DictReader(f, skipinitialspace=True)]
-
 def get_medium_img_url(url):
 	if not url:
 		url = 'http://assets.fontsinuse.com/static/use-media-items/22/21749/full-2000x1125/5670373c/bnb_billboard_01-2000x1125.jpeg'
@@ -44,7 +37,8 @@ def get_medium_img_url(url):
 	return url
 
 def find_similar(input_description):
-	    
+	NYClistings = urls.nyc
+	SFlistings = urls.sf
 	data = NYClistings + SFlistings
 
 	descript_dict = {}
@@ -71,9 +65,8 @@ def find_similar(input_description):
 	top_ten_listings = []  #top ten listings and their data
 	for i in top_ten_idx:
 	    listing_data = id_to_listing[listing_index_to_id[i]]
-	    print(listing_data["thumbnail_url"])
 	    listing_data["thumbnail_url"] = get_medium_img_url(listing_data["thumbnail_url"])
-	    sub_dict = {k: listing_data[k] for k in ('listing_url', 'description', 'price', 'bedrooms', 'accommodates', 
+	    sub_dict = {k: listing_data[k] for k in ('room_type','listing_url', 'description', 'price', 'bedrooms', 'accommodates', 
 	                                       'summary', 'name','thumbnail_url')}
 	    top_ten_listings.append(sub_dict)
 	return top_ten_listings

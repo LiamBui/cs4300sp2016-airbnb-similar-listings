@@ -25,9 +25,12 @@
             <button type="submit" class="btn btn-info"> Go! </button>
         </div>
         </form>
-        
+
         <div class="form-inline global-search">
-            <h4>Output</h4><br>
+            <div class="original-listing">
+                {{orig_listing}}
+            </div>
+            <div class="results-container">Search Results</div><br>
             {% for listing in output %}
                 <div class = "listing-container">
                     <div class = "listing-info">
@@ -37,6 +40,7 @@
                             </a>
                         </div>
                         <br>
+                        <div class="listing-roomtype">Room Type: {{ listing.room_type }} | </div>
                         <div class="listing-accom">Accommodates: {{ listing.accommodates }} | </div>
                         <div class="listing-bedrooms">Bedrooms: {{ listing.bedrooms }} | </div>
                         <div class="listing-price">Price per Night: {{ listing.price }}</div>
