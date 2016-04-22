@@ -41,6 +41,9 @@
                         <div class="listing-bedrooms">Bedrooms: {{ listing.bedrooms }} | </div>
                         <div class="listing-price">Price per Night: {{ listing.price }}</div>
                     </div>
+                    <div class="listing-img-container">
+                        <img src="{{ listing.thumbnail_url }}" />
+                    </div>
                     <div class="listing-text">
                         <div class = "listing-description">Description: {{ listing.description}}</div>
                         <div class = "listing-summary">Summary: {{ listing.summary }}</div>

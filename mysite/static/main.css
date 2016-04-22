@@ -66,11 +66,24 @@ a.btn a:hover{
 }
 
 .listing-text{
-	width: 80%;
-	margin: 10px auto;
+	width: 70%;
+	float: right;
+	margin: 10px;
 	text-align: left;
 }
 
 .listing-text div{
 	margin: 10px;
+}
+
+.listing-img-container{
+	float: left;
+	width: 22%;
+	margin-top: 70px;
+	margin-left: 40px;
+}
+
+.listing-img-container img{
+	width: 100%;
+	height: auto;
 }
