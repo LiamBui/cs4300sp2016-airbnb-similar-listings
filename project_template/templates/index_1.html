@@ -1,0 +1,53 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="/static/bootstrap.min.css">
+        <link rel="stylesheet" href="/static/main.css">
+    </head>
+    
+    <body>
+        <!-- TODO: Please change lines 10 and 11 according to your actual project name and student names-->
+        <div class="topcorner">
+            <p align="right">Airbnb Similar Listings</p>
+            <p align="right">Ambar Soni (as2495) | Maggie Bi (yb89) | Liam Bui (lb598) | Laura Wade (ljw96) </p>
+        </div>
+        
+        <form class="form-inline global-search" method='GET'>
+            <div class="titleandsearch">
+            <h1 style="font-size: 75px; font-family:Futura; color: #fd5c63">
+                similairbnb
+            </h1>
+            
+            <br><br>
+            
+            <div class="form-group">
+                <input id="input" type="text" name="AirbnbURL" class="form-control" placeholder="Paste an Airbnb URL here">
+            </div>
+            <button type="submit" class="btn btn-info"> Go! </button>
+        </div>
+        </form>
+        
+        <div class="form-inline global-search">
+            <h4>Output</h4><br>
+            {% for line in output %}
+                {{line}}<br>
+            {% endfor %}
+            
+            <div class="pagination">
+                <span class="step-links">
+                    {% if output.has_previous %}
+                    <a href= "{{magic_url}}&page={{ output.previous_page_number }}">previous</a>
+                    {% endif %}
+                    
+                    <!-- Showing the page numbers in Html Page -->
+                    <span class="current">
+                    Page _{{ output.number }}_ of _{{ output.paginator.num_pages }}_
+                    </span>
+                    
+                    {% if output.has_next %}
+                    <a href= "{{magic_url}}&page={{ output.next_page_number }}">next</a>
+                    {% endif %}
+                </span>
+            </div>
+        </div>
+    </body>
+</html>
