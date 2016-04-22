@@ -13,24 +13,50 @@
         
         <form class="form-inline global-search" method='GET'>
             <div class="titleandsearch">
-            <h1 style="font-size: 75px; font-family:Futura; color: #fd5c63">
+            <h1>
                 similairbnb
             </h1>
             
             <br><br>
             
             <div class="form-group">
-                <input id="input" type="text" name="AirbnbURL" class="form-control" placeholder="Paste an Airbnb URL here">
+                <input id="input" type="text" name="AirbnbURL" class="form-control" placeholder="Paste an Airbnb URL here" value="{{ listing_url }}">
             </div>
             <button type="submit" class="btn btn-info"> Go! </button>
         </div>
         </form>
 
         <div class="form-inline global-search">
+        {% if orig_listing %}
             <div class="original-listing">
-                {{orig_listing}}
+            <h1>Listing Input</h1><br>
+                <div class = "listing-container">
+                    <div class = "listing-info">
+                        <div class="listing-name">
+                            <a href="{{ orig_listing.listing_url }}">
+                                {{ orig_listing.name }}
+                            </a>
+                        </div>
+                        <br>
+                        <div class="listing-roomtype">Room Type: {{ orig_listing.room_type }} | </div>
+                        <div class="listing-accom">Accommodates: {{ orig_listing.accommodates }} | </div>
+                        <div class="listing-bedrooms">Bedrooms: {{ orig_listing.bedrooms }} | </div>
+                        <div class="listing-price">Price per Night: {{ orig_listing.price }}</div>
+                    </div>
+                    <div class="listing-img-container">
+                        <img src="{{ orig_listing.thumbnail_url }}" />
+                    </div>
+                    <div class="listing-text">
+                        <div class = "listing-description">Description: {{ orig_listing.description}}</div>
+                        <div class = "listing-summary">Summary: {{ orig_listing.summary }}</div>
+                    </div>
+                    <br>
+                </div>
             </div>
-            <div class="results-container">Search Results</div><br>
+            {% endif %}
+            <div class="results-container">
+            {% if output %}
+            <h1>Search Results</h1><br>
             {% for listing in output %}
                 <div class = "listing-container">
                     <div class = "listing-info">
@@ -55,6 +81,8 @@
                     <br>
                 </div>
             {% endfor %}
+            {% endif %}
+            </div><br>
             
             <!-- <div class="pagination">
                 <span class="step-links">

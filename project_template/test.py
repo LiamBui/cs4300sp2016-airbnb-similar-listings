@@ -42,11 +42,11 @@ def find_similar(input_description):
 	data = NYClistings + SFlistings
 
 	descript_dict = {}
-	print(len(NYClistings))
+
 	for d in data:
 	    key = d['id']
 	    descript_dict[key]=d['description']
-	    # print d
+
 
 	id_to_listing = {}
 	for d in data:
