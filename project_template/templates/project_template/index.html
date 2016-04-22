@@ -36,23 +36,25 @@
                                 {{ listing.name }}
                             </a>
                         </div>
-                        <div class="listing-accom">{{ listing.accommodates }}</div>
-                        <div class="listing-bedrooms">{{ listing.bedrooms }}</div>
-                        <div class="listing-price">{{ listing.price }}</div>
-
+                        <br>
+                        <div class="listing-accom">Accommodates: {{ listing.accommodates }} | </div>
+                        <div class="listing-bedrooms">Bedrooms: {{ listing.bedrooms }} | </div>
+                        <div class="listing-price">Price per Night: {{ listing.price }}</div>
                     </div>
-                    <div class = "listing-description">{{listing.description}}</div>
-                    <div class = "listing-summary">{{ listing.summary }}</div><br>
+                    <div class="listing-text">
+                        <div class = "listing-description">Description: {{ listing.description}}</div>
+                        <div class = "listing-summary">Summary: {{ listing.summary }}</div>
+                    </div>
+                    <br>
                 </div>
             {% endfor %}
             
-            <div class="pagination">
+            <!-- <div class="pagination">
                 <span class="step-links">
                     {% if output.has_previous %}
                     <a href= "{{magic_url}}&page={{ output.previous_page_number }}">previous</a>
                     {% endif %}
                     
-                    <!-- Showing the page numbers in Html Page -->
                     <span class="current">
                     Page _{{ output.number }}_ of _{{ output.paginator.num_pages }}_
                     </span>
@@ -61,7 +63,7 @@
                     <a href= "{{magic_url}}&page={{ output.next_page_number }}">next</a>
                     {% endif %}
                 </span>
-            </div>
+            </div> -->
         </div>
     </body>
 </html>
