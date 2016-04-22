@@ -20,6 +20,7 @@ import csv
 def index(request):
     output_list = ''
     output=''
+    orig_listing = {}
     print(request.GET)
     if request.GET.get('AirbnbURL'):
         headers = {"User-agent":"Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36"}
@@ -35,7 +36,7 @@ def index(request):
         input_description = data['listing']['description']
         output_list = find_similar(input_description)
         output = output_list
-        orig_listing = {}
+
         # orig_listing = {k: data['listing'][k] for k in ('room_type','listing_url', 'description', 'price', 'bedrooms', 'accommodates', 
                                            # 'summary', 'name','thumbnail_url')}
         # paginator = Paginator(output_list, 10)
