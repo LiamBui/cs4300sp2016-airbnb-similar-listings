@@ -29,7 +29,23 @@
         <div class="form-inline global-search">
             <h4>Output</h4><br>
             {% for listing in output %}
-                {{listing}}<br>
+                <div class = "listing-container">
+                    <div class = "listing-info">
+                        <div class="listing-name">
+                            <a href="{{ listing.listing_url }}">
+                                {{ listing.name }}
+                            </a>
+                        </div>
+                        <div class="listing-accom"></div>
+                        <div class="listing-bedrooms"></div>
+                        <div class="listing-price"></div>
+
+                    </div>
+                    <div class = "listing-description"></div>
+                    <div class = "listing-summary"></div>
+
+                    {{listing}}<br>
+                </div>
             {% endfor %}
             
             <div class="pagination">
