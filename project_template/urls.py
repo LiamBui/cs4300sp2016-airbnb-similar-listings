@@ -3,14 +3,16 @@ from django.conf.urls import url
 from . import views
 import csv
 import urllib2
+import time
 
 nyc_url = 'https://s3.amazonaws.com/similairbnb/filtered_nyc_listings.csv'
 sf_url = 'https://s3.amazonaws.com/similairbnb/filtered_sf_listings.csv'
 
+start = time.time()
 nyc = [{k: v for k, v in row.items()} for row in csv.DictReader(urllib2.urlopen(nyc_url), skipinitialspace=True)]
 sf = [{k: v for k, v in row.items()} for row in csv.DictReader(urllib2.urlopen(sf_url), skipinitialspace=True)]
-
-
+time_elapsed = time.time() - start
+print("TIME TOOK TO LOAD: " + str(time_elapsed))
 
 app_name = 'pt'
 urlpatterns = [
