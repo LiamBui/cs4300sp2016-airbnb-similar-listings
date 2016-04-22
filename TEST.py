@@ -56,12 +56,13 @@ ranked_list = np.argsort(cosine_similarity(listing_by_vocab[0:1], listing_by_voc
 
 top_ten_idx = ranked_list[1:11] #first element is the input listing itself
 top_ten_listings = []  #top ten listings and their data
-for i in top_ten:
+for i in top_ten_idx:
     listing_data = id_to_listing[listing_index_to_id[i]]
     sub_dict = {k: listing_data[k] for k in ('listing_url', 'description', 'price', 'bedrooms', 'accommodates', 
                                        'summary', 'name')}
     top_ten_listings.append(sub_dict)
 
+print(top_ten_listings)
 #get ids of the listings so can look up other information to display
 #need to figure out a way to map back from description to id
 #descript dict maps the id key to the description value
