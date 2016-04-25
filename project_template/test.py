@@ -1,11 +1,10 @@
 from .models import Docs
 import os
-import Levenshtein
+
 import json
 import numpy as np
-from sklearn.metrics.pairwise import distance_metrics
-from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.feature_extraction.text import TfidfVectorizer
 import urllib2
 import urls
 
@@ -15,8 +14,8 @@ def read_file(n):
 	transcripts = json.load(file)
 	return transcripts
 
-def _edit(query, msg):
-    return Levenshtein.distance(query.lower(), msg.lower())
+# def _edit(query, msg):
+#     return Levenshtein.distance(query.lower(), msg.lower())
 
 #def find_similar(q):
 #	transcripts = read_file(1)
@@ -36,39 +35,39 @@ def get_medium_img_url(url):
 		url = url[:index+1]+"aki_policy=medium"
 	return url
 
-def find_similar(input_description):
-	NYClistings = urls.nyc
-	SFlistings = urls.sf
-	data = NYClistings + SFlistings
+tfidf_vec = TfidfVectorizer(min_df=10, max_df=.8, max_features=5000, norm='l2', stop_words='english')
 
-	descript_dict = {}
+def nyc_find_similar(input_description):
+	desc_tfidf = urls.desc_tfidf
 
-	for d in data:
-	    key = d['id']
-	    descript_dict[key]=d['description']
-
-
-	id_to_listing = {}
-	for d in data:
-	    id_to_listing[d['id']] = d
-
-	listing_index_to_id = {index:listing_id for index, listing_id in enumerate([d['id'] for d in data])}
-
-	n_feats = 5000
-	descriptions = [input_description]+ [descript_dict[d] for d in descript_dict]
-	listing_by_vocab = np.empty((len(descriptions), n_feats))
-
-	tfidf_vec = TfidfVectorizer(min_df = 10, max_df = .8, max_features = n_feats, norm='l2', stop_words = 'english')
-	listing_by_vocab = tfidf_vec.fit_transform(descriptions)
-
-	ranked_list = np.argsort(cosine_similarity(listing_by_vocab[0:1], listing_by_vocab))[0][::-1]
+	nyc_listing_by_vocab = tfidf_vec.fit_transform([input_description]+desc_tfidf["nyc_descript_arr"])
+	
+	ranked_list = np.argsort(cosine_similarity(nyc_listing_by_vocab[0], nyc_listing_by_vocab)[0][::-1])
 
 	top_ten_idx = ranked_list[1:11] #first element is the input listing itself
 	top_ten_listings = []  #top ten listings and their data
 	for i in top_ten_idx:
-	    listing_data = id_to_listing[listing_index_to_id[i]]
+	    listing_data = desc_tfidf['nyc'][desc_tfidf["nyc_listing_index_to_id"][i]]
 	    listing_data["thumbnail_url"] = get_medium_img_url(listing_data["thumbnail_url"])
 	    sub_dict = {k: listing_data[k] for k in ('room_type','listing_url', 'description', 'price', 'bedrooms', 'accommodates', 
 	                                       'summary', 'name','thumbnail_url')}
 	    top_ten_listings.append(sub_dict)
 	return top_ten_listings
+
+def sf_find_similar(input_description):
+	desc_tfidf = urls.desc_tfidf
+
+	sf_listing_by_vocab = tfidf_vec.fit_transform([input_description]+desc_tfidf["sf_descript_arr"])
+	
+	ranked_list = np.argsort(cosine_similarity(sf_listing_by_vocab[0], sf_listing_by_vocab)[0][::-1])
+
+	top_ten_idx = ranked_list[1:11] #first element is the input listing itself
+	top_ten_listings = []  #top ten listings and their data
+	for i in top_ten_idx:
+	    listing_data = desc_tfidf['sf'][desc_tfidf["sf_listing_index_to_id"][i]]
+	    listing_data["thumbnail_url"] = get_medium_img_url(listing_data["thumbnail_url"])
+	    sub_dict = {k: listing_data[k] for k in ('room_type','listing_url', 'description', 'price', 'bedrooms', 'accommodates', 
+	                                       'summary', 'name','thumbnail_url')}
+	    top_ten_listings.append(sub_dict)
+	return top_ten_listings
+

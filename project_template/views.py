@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from .models import Docs
 from django.template import loader
 from .form import QueryForm
-from .test import find_similar, get_medium_img_url
+from .test import nyc_find_similar, get_medium_img_url
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import json
 import numpy as np
@@ -31,7 +31,8 @@ def index(request):
         url = 'https://api.airbnb.com/v2/listings/' + search_id + '?client_id=3092nxybyb0otqw18e8nh5nty&_format=v1_legacy_for_p3'
         api_request = urllib2.Request(url, headers=headers)
         data = json.loads(urllib2.urlopen(api_request).read())
-        output_list = find_similar(data['listing']['description'])
+
+        output_list = nyc_find_similar(data['listing']['description'])
         
         output = output_list
 
