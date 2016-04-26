@@ -4,7 +4,7 @@ from django.http import HttpResponse
 from .models import Docs
 from django.template import loader
 from .form import QueryForm
-from .test import nyc_find_similar, get_medium_img_url
+from .test import find_similar, get_medium_img_url, lda_reviews
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import json
 import numpy as np
@@ -14,6 +14,11 @@ from sklearn.metrics.pairwise import cosine_similarity
 import urllib2
 import csv
 
+def load_reviews(data):
+    reviews = []
+    for r in data['reviews']:
+        reviews.append(r['comments'])
+    return reviews
 
 # Create your views here.
 def index(request):
@@ -29,10 +34,18 @@ def index(request):
         else:
             search_id = search[search.find('rooms/')+6:search.find('?')]
         url = 'https://api.airbnb.com/v2/listings/' + search_id + '?client_id=3092nxybyb0otqw18e8nh5nty&_format=v1_legacy_for_p3'
-        api_request = urllib2.Request(url, headers=headers)
-        data = json.loads(urllib2.urlopen(api_request).read())
 
-        output_list = nyc_find_similar(data['listing']['description'])
+        review_url = "https://api.airbnb.com/v2/reviews?client_id=3092nxybyb0otqw18e8nh5nty&listing_id="+search_id+"&role=all"
+        
+        api_request = urllib2.Request(url, headers=headers)
+        review_request = urllib2.Request(review_url, headers=headers)
+
+        data = json.loads(urllib2.urlopen(api_request).read())
+        listing_reviews = load_reviews(json.loads(urllib2.urlopen(review_request).read()))
+
+        # lda_reviews()
+
+        output_list = find_similar(data['listing']['description'] + " " + data['listing']['summary'])
         
         output = output_list
 

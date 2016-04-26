@@ -5,8 +5,8 @@ from ast import literal_eval
 LISTING_PATH = "data/sf_listings.csv"
 OUT_LISTING = "data/filtered_sf_listings.csv"
 
-REVIEW_PATH = "data/nyc_review.csv"
-OUT_REVIEWS = "data/filtered_nyc_reviews.json"
+REVIEW_PATH = "data/sf_reviews.csv"
+OUT_REVIEWS = "data/filtered_sf_reviews.json"
 
 FEATURE_LIST = ["id", "listing_url", "name", "summary", "space", "description", "thumbnail_url",
 "host_is_superhost", "host_identity_verified", "neighbourhood_cleansed", 
@@ -34,18 +34,18 @@ def read_csv_reviews(file):
 	results = {}
 	reader = csv.DictReader(in_file)
 	previd = 0
-	reviews = ''
+	reviews = []
 	for row in reader:
 		comments = row['comments']
 		if not previd:
 			previd = row['listing_id']
-			reviews = comments
+			reviews = [comments]
 		elif row['listing_id'] == previd:
-			reviews += ' ' + comments
+			reviews.append(comments)
 		else:
 			results[previd] = reviews
 			previd = row['listing_id']
-			reviews = comments
+			reviews = [comments]
 	return results
 
 with open(OUT_REVIEWS, 'w') as out_file:

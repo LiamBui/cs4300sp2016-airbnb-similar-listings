@@ -11,7 +11,8 @@
 	body {
 		padding-top: 15%;
 		padding-bottom: 15px;
-		background-image: url('NYSkyline.jpeg');;
+		background-image: url('NYSkyline.jpeg');
+		background-attachment: fixed;
 	}
 	.global-search {
 		text-align:center;
