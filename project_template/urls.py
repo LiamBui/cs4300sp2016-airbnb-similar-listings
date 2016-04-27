@@ -6,6 +6,7 @@ import urllib2
 import time
 import json
 
+amazon_s3 = 'https://s3.amazonaws.com/similairbnb/'
 
 
 def desc_tfidf_initialization():
@@ -55,6 +56,16 @@ def reviews_initialization():
 		"nyc_reviews": nyc_reviews,
 		"sf_reviews": sf_reviews
 	}
+
+def feature_initializatoin():
+	nyc_index_out = amazon_s3 + 'nyc_index_processed.pickle'
+	sf_index_out = amazon_s3 + 'sf_index_processed.pickle'
+	nyc_out = amazon_s3 + 'nyc_data_processed.pickle'
+	sf_out = amazon_s3 + 'sf_data_processed.pickle'
+	pass
+
+
+
 
 start = time.time()
 desc_tfidf = desc_tfidf_initialization()
