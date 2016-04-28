@@ -77,8 +77,8 @@ def feature_initializatoin():
 
 start = time.time()
 desc_tfidf = desc_tfidf_initialization()
-reviews_data = reviews_initialization()
-feature_data = feature_initializatoin()
+#reviews_data = reviews_initialization()
+#feature_data = feature_initializatoin()
 
 time_elapsed = time.time() - start
 print("TIME TOOK TO LOAD: " + str(time_elapsed))
