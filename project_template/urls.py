@@ -64,10 +64,10 @@ def feature_initializatoin():
 	nyc_out = amazon_s3 + 'nyc_data_processed.pickle'
 	sf_out = amazon_s3 + 'sf_data_processed.pickle'
 
-	nyc_data = pickle.load(open(nyc_out, 'r'))
-	sf_data = pickle.load(open(sf_out, 'r'))
-	nyc_index = pickle.load(open(nyc_index_out, 'r'))
-	sf_index = pickle.load(open(sf_index_out, 'r'))
+	nyc_data = pickle.load(urllib2.urlopen(nyc_out, 'r'))
+	sf_data = pickle.load(urllib2.urlopen(sf_out, 'r'))
+	nyc_index = pickle.load(urllib2.urlopen(nyc_index_out, 'r'))
+	sf_index = pickle.load(urllib2.urlopen(sf_index_out, 'r'))
 
 
 
