@@ -9,4 +9,3 @@ scikit-learn==0.17.0
 stop-words==2015.2.23.1
 gensim
 nltk
-pickle
