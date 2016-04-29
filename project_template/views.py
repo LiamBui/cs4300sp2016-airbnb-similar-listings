@@ -117,13 +117,14 @@ def index(request):
         review_request = urllib2.Request(review_url, headers=headers)
 
         data = json.loads(urllib2.urlopen(api_request).read())
+        # get reviews
         listing_reviews = load_reviews(json.loads(urllib2.urlopen(review_request).read()))
+        # extract features and construct a vector of these features
         extracted_data = extract_listing_feature(data['listing'])
 
-
+        # This is the function that returns the final list with all three components combined
         output = similarity(data['listing'], listing_reviews, extracted_data)
         
-
         orig_listing = {k: data['listing'][k] for k in ('room_type', 'description', 'price', 'bedrooms', 'person_capacity', 'summary', 'name','thumbnail_url')}
         orig_listing['listing_url'] = search
         orig_listing['accommodates'] = orig_listing['person_capacity']

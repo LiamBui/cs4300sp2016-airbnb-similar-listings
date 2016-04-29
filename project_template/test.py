@@ -65,6 +65,7 @@ def find_similar_features(data, listing_id):
 		results[listing_id] = sim_list[index]
 	return results
 
+# THIS FUNCTION IS NOT CALLED YET, NEED LDA FILES
 def lda_reviews(v):
 	reviews_data = {}
 	
@@ -99,6 +100,10 @@ def similarity(data, reviews, extracted):
 
 	top_ten_idx = ranked_list[:10] #first element is the input listing itself
 	top_ten_listings = []  #top ten listings and their data
+
+	# TO LAURA AND LIAM
+	# sim here is the actual score, not used yet, but you guys can make it a part of 
+	# the result returned
 	for (i, sim) in top_ten_idx:
 	    listing_data = full_data[i]
 	    listing_data["thumbnail_url"] = get_medium_img_url(listing_data["thumbnail_url"])
