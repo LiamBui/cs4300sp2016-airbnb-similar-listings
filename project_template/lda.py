@@ -7,6 +7,13 @@ from gensim import corpora, models
 import gensim
 import time
 import pickle
+from threading import Thread
+from itertools import islice
+
+def chunks(data, size):
+    it = iter(data)
+    for i in xrange(0, len(data), size):
+        yield {k:data[k] for k in islice(it, size)}
 
 tokenizer = RegexpTokenizer(r'\w+')
 lda_tokenizer = RegexpTokenizer(r'\b[a-z]+\b')
@@ -17,13 +24,20 @@ data = {}
 with open('../data/filtered_sf_reviews.json', 'r') as in_file:
 	data = json.load(in_file)
 
-def lda_reviews(data, isNYC=False):
+def partition(data, size=800):
+	partitions = []
+	for item in chunks(data, size):
+		partitions.append(item)
+	return partitions
+
+def lda_reviews((data, thread_id)):
 	reviews_data = data
 	results = {}
 	start = time.time()
 	counter = 0
 	for k, v in reviews_data.iteritems():
-		print(str(float(counter)/len(data)*100)+"%")
+		print("Thread #" +str(thread_id)+" at: "+str(float(counter)/len(data)*100)+"%")
+
 		v = [[stemmer.stem(i) for i in tokenizer.tokenize(r.lower()) if not i in en_stopwords] for r in v]
 		dictionary = corpora.Dictionary(v)
 		corpus = [dictionary.doc2bow(r) for r in v]
@@ -36,11 +50,36 @@ def lda_reviews(data, isNYC=False):
 		# print(topics)
 		results[k] = topics
 		counter += 1
-	
-	time_elapsed = time.time() - start
-	print("---------------TIME ELAPSED:"+time_elapsed+"-------------")
-	return results
 
-out_file = open("../pickles/review_topics.pickle", 'wb')
-pickle.dump(lda_reviews(data), out_file)
-out_file.close()
+		time.sleep(1)
+
+	out_file = open("../pickles/review_topics_"+str(file_id)+".pickle", 'wb')
+	pickle.dump(results, out_file)
+	out_file.close()
+	
+	# # time_elapsed = time.time() - start
+	# # print("---------------Thread #" + str(thread_id)+"DONE! TIME ELAPSED:"+str(time_elapsed)+"-------------")
+	# return results
+
+
+
+# def threaded_function((data, file_id)):
+# 	results = lda_reviews(file_id, data)
+	
+
+if __name__=='__main__':
+	partitions = partition(data)
+	
+	counter = len(partitions)
+	threads = []
+	for i in range(counter):
+		thread = Thread(target=lda_reviews, args=((partitions[i], i), ))
+		thread.start()
+		threads.append(thread)
+
+	for t in threads:
+		t.join()
+
+
+
+
