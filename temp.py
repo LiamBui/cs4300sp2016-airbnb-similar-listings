@@ -49,7 +49,7 @@ def read_csv_reviews(file):
 	return results
 
 with open(OUT_REVIEWS, 'w') as out_file:
-	dump(read_csv_reviews(in_file), out_file, indent=4)
+	dump(read_csv_reviews(in_file)[], out_file, indent=4)
 
 	
 	

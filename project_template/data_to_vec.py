@@ -4,12 +4,12 @@ import pickle
 
 # Mostly results from dataset exploration
 FEATURE_LIST = ["id", "host_is_superhost", "host_identity_verified", "room_type", "accommodates", "bedrooms", "beds",
-"amenities", "price", "review_scores_rating", "review_scores_accuracy",
+"amenities", "price", "review_scores_accuracy",
 "review_scores_cleanliness", "review_scores_checkin", "review_scores_communication",
 "review_scores_location", "review_scores_value", "instant_bookable", "cancellation_policy"]
 
 STR_FEATURE_LIST = ["cancellation_policy", "room_type", "amenities"]
-RANGE_FEATURE_LIST = ["accommodates", "bedrooms", "beds", "review_scores_rating", "price"]
+RANGE_FEATURE_LIST = ["accommodates", "bedrooms", "beds", "price"]
 VALUE_FEATURE_LIST = ["review_scores_accuracy",
 "review_scores_cleanliness", "review_scores_checkin", "review_scores_communication",
 "review_scores_location", "review_scores_value"]
@@ -52,10 +52,6 @@ def get_new_value_by_range(f, row):
 			price = float(row[f].replace('$', '').replace(',', ''))
 			if price <= v:
 				return v
-	elif f == 'review_scores_rating':
-		for v in REVIEW_SCORE_RANGES:
-			if row[f] <= v:
-				return v
 
 def preprocess(data):
 	index_to_id = {}
@@ -78,11 +74,11 @@ def preprocess(data):
 				k.pop(f, None)
 	return {'data':data, 'index_to_id': index_to_id}
 
-nyc_data = []
+# nyc_data = []
 sf_data = []
 
-with open('../data/filtered_nyc_listings.csv') as f:
-   	nyc_data = [{k: v for k, v in row.items() if k in FEATURE_LIST} for row in csv.DictReader(f, skipinitialspace=True)]
+# with open('../data/filtered_nyc_listings.csv') as f:
+#    	nyc_data = [{k: v for k, v in row.items() if k in FEATURE_LIST} for row in csv.DictReader(f, skipinitialspace=True)]
         
 with open('../data/filtered_sf_listings.csv') as f:
 	sf_data = [{k: v for k, v in row.items() if k in FEATURE_LIST} for row in csv.DictReader(f, skipinitialspace=True)]
@@ -90,39 +86,39 @@ with open('../data/filtered_sf_listings.csv') as f:
 
 vec = DictVectorizer()
 
-processed_nyc_all = preprocess(nyc_data)
+# processed_nyc_all = preprocess(nyc_data)
 processed_sf_all = preprocess(sf_data)
 
-processed_nyc = vec.fit_transform(processed_nyc_all['data']).toarray()
+# processed_nyc = vec.fit_transform(processed_nyc_all['data']).toarray()
 
-processed_sf = vec.fit_transform(processed_sf_all['data']).toarray()
-
-nyc_index_to_id = processed_nyc_all['index_to_id']
+# nyc_index_to_id = processed_nyc_all['index_to_id']
 sf_index_to_id = processed_sf_all['index_to_id']
 
-nyc_index_out = '../data/nyc_index_processed.pickle'
+# nyc_index_out = '../data/nyc_index_processed.pickle'
 sf_index_out = '../data/sf_index_processed.pickle'
-nyc_out = '../data/nyc_data_processed.pickle'
+# nyc_out = '../data/nyc_data_processed.pickle'
 sf_out = '../data/sf_data_processed.pickle'
 
-nyc_file = open(nyc_out, 'wb')
+# nyc_file = open(nyc_out, 'wb')
 sf_file = open(sf_out, 'wb')
 
-nyc_index_file = open(nyc_index_out, 'wb')
+# nyc_index_file = open(nyc_index_out, 'wb')
 sf_index_file = open(sf_index_out, 'wb')
 
-pickle.dump(nyc_index_to_id, nyc_index_file)
+# pickle.dump(nyc_index_to_id, nyc_index_file)
 pickle.dump(sf_index_to_id, sf_index_file)
 
-pickle.dump(processed_nyc, nyc_file)
-pickle.dump(processed_sf, sf_file)
+# pickle.dump(processed_nyc, nyc_file)
+pickle.dump(processed_sf_all['data'], sf_file)
 
-nyc_file.close()
+# nyc_file.close()
 sf_file.close()
+sf_index_file.close()
 
 # LOAD IN PICKLE FILES
-# nyc_file_in = open(nyc_out, 'r')
-# nyc_data = pickle.load(nyc_file_in)
+# sf_file_in = open(sf_out, 'r')
+# sf_data = pickle.load(sf_file_in)
+# print(sf_data[:10])
 
 
 # Code used to explore dataset
