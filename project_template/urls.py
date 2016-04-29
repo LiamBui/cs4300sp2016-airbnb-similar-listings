@@ -71,9 +71,9 @@ def feature_initializatoin():
 	# # nyc_index = pickle.load(urllib2.urlopen(nyc_index_out, 'r'))
 	# sf_index = pickle.load(urllib2.urlopen(sf_index_out))
 
-	sf_data = pickle.load(open('data/sf_data_processed.pickle', 'r'))
+	sf_data = pickle.load(open('pickles/sf_data_processed.pickle', 'r'))
 	# nyc_index = pickle.load(urllib2.urlopen(nyc_index_out, 'r'))
-	sf_index = pickle.load(open('data/sf_index_processed.pickle', 'r'))
+	sf_index = pickle.load(open('pickles/sf_index_processed.pickle', 'r'))
 	return (sf_data, sf_index)
 
 
