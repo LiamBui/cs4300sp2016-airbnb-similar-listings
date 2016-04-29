@@ -24,7 +24,7 @@ data = {}
 with open('../data/filtered_sf_reviews.json', 'r') as in_file:
 	data = json.load(in_file)
 
-def partition(data, size=800):
+def partition(data, size=500):
 	partitions = []
 	for item in chunks(data, size):
 		partitions.append(item)
@@ -53,7 +53,7 @@ def lda_reviews((data, thread_id)):
 
 		time.sleep(1)
 
-	out_file = open("../pickles/review_topics_"+str(file_id)+".pickle", 'wb')
+	out_file = open("../pickles/review_topics_"+str(thread_id)+".pickle", 'wb')
 	pickle.dump(results, out_file)
 	out_file.close()
 	
@@ -72,6 +72,7 @@ if __name__=='__main__':
 	
 	counter = len(partitions)
 	threads = []
+	start = time.time()
 	for i in range(counter):
 		thread = Thread(target=lda_reviews, args=((partitions[i], i), ))
 		thread.start()
@@ -80,6 +81,13 @@ if __name__=='__main__':
 	for t in threads:
 		t.join()
 
+	time_elapsed = time.time() - start
+	print(str(time_elapsed))
+
+	# start = time.time()
+	# lda_reviews((partition(data, size=20)[0], 2))
+	# time_elapsed = time.time() - start
+	# print(str(time_elapsed))
 
 
 
