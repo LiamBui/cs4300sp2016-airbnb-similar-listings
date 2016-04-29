@@ -2,6 +2,15 @@
     <head>
         <link rel="stylesheet" href="/static/bootstrap.min.css">
         <link rel="stylesheet" href="/static/main.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+        <script src="/static/script.js"></script>
+        <script type="text/javascript"> 
+            var orig_room_type = "{{orig_listing.room_type}}";
+            var orig_accomm = '{{ orig_listing.accommodates }}';
+            var orig_beds = '{{ orig_listing.bedrooms }}';
+            var output = '{{ output }}';
+        </script>
+
     </head>
     
     <body>
@@ -9,6 +18,13 @@
         <div class="topcorner">
             <p align="right">Airbnb Similar Listings</p>
             <p align="right">Ambar Soni (as2495) | Maggie Bi (yb89) | Liam Bui (lb598) | Laura Wade (ljw96) </p>
+        </div>
+
+        <div class="toggle-button">
+            <button></button>
+        </div>
+        <div class="version">
+            <p align="left">Prototype</p>
         </div>
         
         <form class="form-inline global-search" method='GET'>
@@ -33,22 +49,27 @@
                 <div class = "listing-container">
                     <div class = "listing-info">
                         <div class="listing-name">
-                            <a href="{{ orig_listing.listing_url }}">
+                            <a href="{{ orig_listing.listing_url }}" target="_blank">
                                 {{ orig_listing.name }}
                             </a>
                         </div>
                         <br>
-                        <div class="listing-roomtype">Room Type: {{ orig_listing.room_type }} | </div>
-                        <div class="listing-accom">Accommodates: {{ orig_listing.accommodates }} | </div>
-                        <div class="listing-bedrooms">Bedrooms: {{ orig_listing.bedrooms }} | </div>
-                        <div class="listing-price">Price per Night: {{ orig_listing.price }}</div>
+                        <div class="quickinfo" id="listing-roomtype"><img id="roomtype_icon" class="icons"></img><p class='icon_labels'id='orig-roomtype'></p></div>
+                        <div class="quickinfo" id="listing-accom"><img id="accom_icon" class="icons"></img><p class='icon_labels' id='orig-accom'></p></div>
+                        <div class="quickinfo" id ="listing-bedrooms"><img id="bedroom_icon" class="icons"></img><p class='icon_labels' id='orig-bed'></p></div>
+                        <div class="quickinfo" id="listing-price">${{ orig_listing.price }} per Night</div>
                     </div>
                     <div class="listing-img-container">
                         <img src="{{ orig_listing.thumbnail_url }}" />
                     </div>
                     <div class="listing-text">
-                        <div class = "listing-description">Description: {{ orig_listing.description}}</div>
-                        <div class = "listing-summary">Summary: {{ orig_listing.summary }}</div>
+                        <div class = "listing-description">Description: <br>
+                        <span class="more">
+                            {{ orig_listing.description}}</span></div>
+                        <div class = "listing-summary">Summary: <br>
+                        <span class='more'>
+                            {{ orig_listing.summary }}
+                        </span></div>
                     </div>
                     <br>
                 </div>
@@ -58,10 +79,15 @@
             {% if output %}
             <h1>Search Results</h1><br>
             {% for listing in output %}
+                <script type="text/javascript"> 
+                var listing_room_type = "{{listing.room_type}}";
+                var listing_accommodates = '{{ listing.accommodates }}';
+                var listing_bedrooms = '{{ listing.bedrooms }}';
+                </script>
                 <div class = "listing-container">
                     <div class = "listing-info">
                         <div class="listing-name">
-                            <a href="{{ listing.listing_url }}">
+                            <a href="{{ listing.listing_url }}" target="_blank">
                                 {{ listing.name }}
                             </a>
                         </div>
@@ -75,8 +101,14 @@
                         <img src="{{ listing.thumbnail_url }}" />
                     </div>
                     <div class="listing-text">
-                        <div class = "listing-description">Description: {{ listing.description}}</div>
-                        <div class = "listing-summary">Summary: {{ listing.summary }}</div>
+                        <div class = "listing-description">Description: <br>
+                            <span class="more">
+                            {{ listing.description}}
+                            </span></div>
+                        <div class = "listing-summary">Summary: <br>
+                            <span class="more">
+                            {{ listing.summary }}
+                            </span></div>
                     </div>
                     <br>
                 </div>
