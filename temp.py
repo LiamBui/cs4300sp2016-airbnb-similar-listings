@@ -1,6 +1,7 @@
 import csv
 from json import dump
 from ast import literal_eval
+import pickle
 
 LISTING_PATH = "data/sf_listings.csv"
 OUT_LISTING = "data/filtered_sf_listings.csv"
@@ -28,28 +29,40 @@ FEATURE_LIST = ["id", "listing_url", "name", "summary", "space", "description", 
 # 			newrow[f] = row[f]
 # 		writer.writerow(newrow)
 
-in_file = open(REVIEW_PATH, 'rb')
+# in_file = open(REVIEW_PATH, 'rb')
 
-def read_csv_reviews(file):
-	results = {}
-	reader = csv.DictReader(in_file)
-	previd = 0
-	reviews = []
-	for row in reader:
-		comments = row['comments']
-		if not previd:
-			previd = row['listing_id']
-			reviews = [comments]
-		elif row['listing_id'] == previd:
-			reviews.append(comments)
-		else:
-			results[previd] = reviews
-			previd = row['listing_id']
-			reviews = [comments]
-	return results
+# def read_csv_reviews(file):
+# 	results = {}
+# 	reader = csv.DictReader(in_file)
+# 	previd = 0
+# 	reviews = []
+# 	for row in reader:
+# 		comments = row['comments']
+# 		if not previd:
+# 			previd = row['listing_id']
+# 			reviews = [comments]
+# 		elif row['listing_id'] == previd:
+# 			reviews.append(comments)
+# 		else:
+# 			results[previd] = reviews
+# 			previd = row['listing_id']
+# 			reviews = [comments]
+# 	return results
 
-with open(OUT_REVIEWS, 'w') as out_file:
-	dump(read_csv_reviews(in_file)[], out_file, indent=4)
+# with open(OUT_REVIEWS, 'w') as out_file:
+# 	dump(read_csv_reviews(in_file)[], out_file, indent=4)
+
+final_lda = {}
+
+for i in range(12):
+	final_lda.update(pickle.load(open('pickles/review_topics_'+str(i)+'.pickle', 'r')))
+
+out_file = open('data/final_lda_topics.pickle', 'wb')
+pickle.dump(final_lda, out_file)
+out_file.close()
+
+print(len(pickle.load(open('data/final_lda_topics.pickle', 'r'))))
+
 
 	
 	

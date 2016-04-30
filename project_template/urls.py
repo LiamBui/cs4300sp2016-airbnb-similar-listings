@@ -50,15 +50,8 @@ def desc_tfidf_initialization():
     		"sf_descript_arr": sf_descript_arr
     	}
 
-def reviews_initialization():
-	# nyc_url = 'https://s3.amazonaws.com/similairbnb/filtered_nyc_reviews.json'
-	sf_url = 'https://s3.amazonaws.com/similairbnb/filtered_sf_reviews.json'
-	# nyc_reviews = json.load(urllib2.urlopen(nyc_url))
-	sf_reviews = json.load(urllib2.urlopen(sf_url))
-	return {
-		# "nyc_reviews": nyc_reviews,
-		"sf_reviews": sf_reviews
-	}
+def lda_initialization():
+	return pickle.load(open('data/final_lda_topics.pickle', 'r'))
 
 def feature_initializatoin():
 	# # nyc_index_out = amazon_s3 + 'nyc_index_processed.pickle'
@@ -71,15 +64,15 @@ def feature_initializatoin():
 	# # nyc_index = pickle.load(urllib2.urlopen(nyc_index_out, 'r'))
 	# sf_index = pickle.load(urllib2.urlopen(sf_index_out))
 
-	sf_data = pickle.load(open('pickles/sf_data_processed.pickle', 'r'))
+	sf_data = pickle.load(open('data/sf_data_processed.pickle', 'r'))
 	# nyc_index = pickle.load(urllib2.urlopen(nyc_index_out, 'r'))
-	sf_index = pickle.load(open('pickles/sf_index_processed.pickle', 'r'))
+	sf_index = pickle.load(open('data/sf_index_processed.pickle', 'r'))
 	return (sf_data, sf_index)
 
 
 start = time.time()
 desc_tfidf = desc_tfidf_initialization()
-# reviews_data = reviews_initialization()
+lda_data = lda_initialization()
 (feature_data, feature_index) = feature_initializatoin()
 
 time_elapsed = time.time() - start

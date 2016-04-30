@@ -67,33 +67,37 @@ def find_similar_features(data, listing_id):
 
 # THIS FUNCTION IS NOT CALLED YET, NEED LDA FILES
 def lda_reviews(v):
-	reviews_data = {}
+	reviews_data = urls.lda_data 
 	
 	v = [[stemmer.stem(i) for i in tokenizer.tokenize(r.lower()) if not i in en_stopwords] for r in v]
 	dictionary = corpora.Dictionary(v)
 	corpus = [dictionary.doc2bow(r) for r in v]
 	ldamodel = gensim.models.LdaModel(corpus, num_topics=5, id2word=dictionary, passes=50)
 	lda_output = ldamodel.show_topics(num_topics=5, num_words=3)
-		
+	
 	topics = []
 	for i in lda_output:
 		topics.extend(lda_tokenizer.tokenize(i[1]))
 
 	results = {}
 	for k, v in reviews_data.iteritems():
-		results[k] = len((mset(topics) & mset(v)).elements())/(len(topics)+len(v))
+		results[k] = float(len((mset(topics) & mset(v))))/(len(topics)+len(v))
 
 	return results
 
 def similarity(data, reviews, extracted):
 	feature_sim = find_similar_features(extracted, data['id'])
 	descript_sim = find_similar_descript(data['description'] + " " + data['summary'])
-	# lda_results = lda_reviews(reviews)
+	lda_results = lda_reviews(reviews)
+
 	desc_tfidf = urls.desc_tfidf
 	combined = {}
 	for k, v in feature_sim.iteritems():
 		if k != data['id']:
-			combined[k] = v * descript_sim[k]
+			if k in lda_results:
+				combined[k] = v * descript_sim[k] * lda_results[k]
+			else: 
+				combined[k] = v * descript_sim[k]
 
 	ranked_list = sorted(combined.items(), key=operator.itemgetter(1), reverse=True)
 	full_data = desc_tfidf['sf']
