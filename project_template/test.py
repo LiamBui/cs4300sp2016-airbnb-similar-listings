@@ -95,10 +95,15 @@ def similarity(data, reviews, extracted):
 	for k, v in feature_sim.iteritems():
 		if k != data['id']:
 			if k in lda_results:
-				combined[k] = v * descript_sim[k] * lda_results[k]
+				combined[k] = v + descript_sim[k] + lda_results[k]
 			else: 
-				combined[k] = v * descript_sim[k]
+				combined[k] = v + descript_sim[k]
 
+	max_score = max(combined.values())
+	
+	for k, v in combined.iteritems():
+		v = v / max_score
+	print(combined.values()[:100],max_score)
 	ranked_list = sorted(combined.items(), key=operator.itemgetter(1), reverse=True)
 	full_data = desc_tfidf['sf']
 
