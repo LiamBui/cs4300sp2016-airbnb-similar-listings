@@ -15,6 +15,7 @@ import time
 from collections import Counter as mset
 import operator
 from sklearn.feature_extraction import DictVectorizer
+from decimal import Decimal
 
 tokenizer = RegexpTokenizer(r'\w+')
 en_stopwords = get_stop_words('en')
@@ -119,7 +120,8 @@ def similarity(data, reviews, extracted):
 	    sub_dict = {k: listing_data[k] for k in ('room_type','listing_url', 'description', 'price', 'bedrooms', 'accommodates', 
 	                                       'summary', 'name','thumbnail_url')}
 	    top_ten_listings.append(sub_dict)
-	    sub_dict['sim_score'] = sim
+	    sub_dict['sim_score'] = sim*100
+	    sub_dict['sim_score_rounded'] = round(sim*100,2)
 	return top_ten_listings
 
 

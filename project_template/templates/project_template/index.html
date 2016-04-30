@@ -81,7 +81,12 @@
             <h1>Search Results</h1><br>
             {% for listing in output %}
                 <div class = "listing-container">
-                    <div class ="listing-score">Similarity Score: {{ listing.sim_score }}</div>
+                    <div class ="listing-score">Similarity Score
+                        <div class="meter">
+                            <span style="width: {{listing.sim_score}}%">{{listing.sim_score_rounded}}%</span>
+                        </div>
+                    </div>
+                    
                     <div class = "listing-info">
                         <div class="listing-name">
                             <a href="{{ listing.listing_url }}" target="_blank">
