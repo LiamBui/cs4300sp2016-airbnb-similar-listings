@@ -3,6 +3,7 @@
         <link rel="stylesheet" href="/static/bootstrap.min.css">
         <link rel="stylesheet" href="/static/main.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+        <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
         <script src="/static/script.js"></script>
         <script type="text/javascript"> 
             var orig_room_type = "{{orig_listing.room_type}}";
@@ -47,6 +48,7 @@
             <h1>Listing Input</h1><br>
                 <div class = "listing-container">
                     <div class = "listing-info">
+                        
                         <div class="listing-name">
                             <a href="{{ orig_listing.listing_url }}" target="_blank">
                                 {{ orig_listing.name }}
@@ -79,6 +81,7 @@
             <h1>Search Results</h1><br>
             {% for listing in output %}
                 <div class = "listing-container">
+                    <div class ="listing-score">Similarity Score: {{ listing.sim_score }}</div>
                     <div class = "listing-info">
                         <div class="listing-name">
                             <a href="{{ listing.listing_url }}" target="_blank">

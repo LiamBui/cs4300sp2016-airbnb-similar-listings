@@ -119,6 +119,7 @@ def similarity(data, reviews, extracted):
 	    sub_dict = {k: listing_data[k] for k in ('room_type','listing_url', 'description', 'price', 'bedrooms', 'accommodates', 
 	                                       'summary', 'name','thumbnail_url')}
 	    top_ten_listings.append(sub_dict)
+	    sub_dict['sim_score'] = sim
 	return top_ten_listings
 
 

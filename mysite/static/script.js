@@ -31,7 +31,7 @@ $(document).ready(function(){
     $('#orig-bed').text('Bedrooms: ' + orig_beds);
 
      // Configure/customize these variables.
-    var showChar = 100;  // How many characters are shown by default
+    var showChar = 210;  // How many characters are shown by default
     var ellipsestext = "...";
     var moretext = "&nbsp;[...]";
     var lesstext = "&nbsp;<<";
@@ -48,9 +48,6 @@ $(document).ready(function(){
  
             $(this).html(html);
         }
-
-    console.log(output[0].summary);
-
 });
  
 $(".morelink").click(function(){
@@ -90,3 +87,16 @@ function amenities(room_type, accommodates, bedrooms){
     //console.log("poop");
     return html;
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
