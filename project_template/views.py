@@ -1,11 +1,11 @@
 from django.shortcuts import render
 from django.shortcuts import render_to_response
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseBadRequest
 from .models import Docs
-from django.template import loader
+from django.template import loader, RequestContext
 from .form import QueryForm
 from .test import get_medium_img_url, similarity
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger, InvalidPage
 import json
 import numpy as np
 from sklearn.metrics.pairwise import distance_metrics
@@ -129,13 +129,16 @@ def index(request):
         orig_listing['listing_url'] = search
         orig_listing['accommodates'] = orig_listing['person_capacity']
         orig_listing['thumbnail_url'] = get_medium_img_url(orig_listing['thumbnail_url'])
-        # paginator = Paginator(output_list, 10)
-        # page = request.GET.get('page')
-        # try:
-        #     output = paginator.page(page)
-        # except PageNotAnInteger:
-        #     output = paginator.page(1)
-        # except EmptyPage:
-        #     output = paginator.page(paginator.num_pages)
+
+        paginator = Paginator(output, 10)
+        page_objects = paginator.page(1).object_list
         # print("OUTPUT: " +output)
-    return render_to_response('project_template/index.html',{'listing_url':search, 'orig_listing': orig_listing,'output': output,'magic_url': request.get_full_path()})
+    if request.is_ajax():
+        if request.GET.get('page_number'):
+            page_number = request.GET.get('page_number');
+            try:
+                page_objects = paginator.page(page_number).object_list
+            except InvalidPage:
+                return HttpResponseBadRequest()
+            return HttpResponse(json.dumps(page_objects), content_type="application/json")
+    return render_to_response('project_template/index.html',{'listing_url':search, 'orig_listing': orig_listing,'output': page_objects,'magic_url': request.get_full_path()})
