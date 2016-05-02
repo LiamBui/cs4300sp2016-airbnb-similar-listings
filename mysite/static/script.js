@@ -3,13 +3,14 @@ var isPrototype = true;
 $(document).on('click', '.toggle-button', function() {
                 $(this).toggleClass('toggle-button-selected'); 
                 isPrototype = !isPrototype;
-                if(isPrototype){
-                    $('.version').text('Prototype')
+                if(!isPrototype){
+                    $('.version').text('Hide similarities');
+                    $('.highlights').addClass('highlight');
                 }
                 else{
-                    $('.version').text('Final')
+                    $('.version').text('Show similarities');
+                    $('.highlights').removeClass('highlight');
                 }
-                console.log(isPrototype)
  });
 
 var showChar = 210;  // How many characters are shown by default
@@ -72,7 +73,7 @@ function highlight_all_words(text, similar_words){
     //console.log(text);
     for (word in similar_words){
         for (i=0; i<text.split(similar_words[word]).length-1; i++){
-            var highlight_word = '<span class="highlight">' + similar_words[word] + '</span>';
+            var highlight_word = '<span class="highlights">' + similar_words[word] + '</span>';
             text = text.split(' ' + similar_words[word] + ' ').join(' ' + highlight_word + ' ');
         }
     } 

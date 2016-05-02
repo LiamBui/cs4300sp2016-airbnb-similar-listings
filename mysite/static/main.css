@@ -61,7 +61,11 @@ a.btn a:hover{
 	color: #4285F4;
 }
 
-.highlight {
+.highlights {
+	display: inline !important;
+}
+
+.highlight {	
 	background-color: #fd5c63;
 	border-radius: 3px;
 	color: #fff;
