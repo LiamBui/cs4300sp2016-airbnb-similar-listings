@@ -18,7 +18,7 @@ var moretext = "&nbsp;[...]";
 var lesstext = "&nbsp;<<";
     
 $(document).ready(function(){
-    $(window).bind('scroll', loadOnScroll);
+    // $(window).bind('scroll', loadOnScroll);
     if(orig_room_type == 'Entire home/apt'){
         $('#roomtype_icon').attr("src", '/static/entirehome.png');
         $('#orig-roomtype').text('Entire Home/Apt');
@@ -117,9 +117,15 @@ function amenities(listing){
 
 var pageNum = 1;
 var hasNextPage = true;
-var loadOnScroll = function() {
-    if ($(window).scrollTop() > $(document).height() - ($(window).height()*2)){
-        $(window).unbind();
+// var loadOnScroll = function() {
+//     if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight)){
+//         $(window).unbind();
+//         loadItems();
+//     }
+// };
+
+window.onscroll = function(ev) {
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
         loadItems();
     }
 };
@@ -145,8 +151,6 @@ var loadItems = function() {
         },
         complete: function(output, textStatus){
             console.log("completed");
-            setTimeout(loadItems, 2000);
-            $(window).bind('scroll', loadOnScroll);
         }
     });
 };
