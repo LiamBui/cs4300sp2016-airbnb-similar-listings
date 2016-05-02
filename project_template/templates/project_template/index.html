@@ -14,6 +14,8 @@
     </head>
     
     <body>
+
+        {% load extras %}
         <!-- TODO: Please change lines 10 and 11 according to your actual project name and student names-->
         <div class="topcorner">
             <p align="right">Airbnb Similar Listings</p>
@@ -65,12 +67,14 @@
                     </div>
                     <div class="listing-text">
                         <div class = "listing-description">Description: <br>
-                        <span class="more">
-                            {{ orig_listing.description}}</span></div>
+                        {% autoescape off %}
+                        {{ orig_listing.description|more }}
+                        {% endautoescape %}</div>
                         <div class = "listing-summary">Summary: <br>
-                        <span class='more'>
-                            {{ orig_listing.summary }}
-                        </span></div>
+                        {% autoescape off %}
+                        {{ orig_listing.summary|more }}
+                        {% endautoescape %}
+                        </div>
                     </div>
                     <br>
                 </div>
@@ -108,13 +112,15 @@
                     </div>
                     <div class="listing-text">
                         <div class = "listing-description">Description: <br>
-                            <span class="more">
-                            {{ listing.description}}
-                            </span></div>
+                            {% autoescape off %}
+                            {{ listing.description|highlight:listing.similar_words }}
+                            {% endautoescape %}
+                        </div>
                         <div class = "listing-summary">Summary: <br>
-                            <span class="more">
-                            {{ listing.summary }}
-                            </span></div>
+                            {% autoescape off %}
+                            {{ listing.summary|highlight:listing.similar_words }}
+                            {% endautoescape %}
+                            </div>
                     </div>
                     <br>
                 </div>

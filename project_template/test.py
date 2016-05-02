@@ -104,11 +104,11 @@ def similarity(data, reviews, extracted):
 	
 	for k, v in combined.iteritems():
 		combined[k] = v / max_score
-	print(combined.values()[:100],max_score)
+	#print(combined.values()[:100],max_score)
 	ranked_list = sorted(combined.items(), key=operator.itemgetter(1), reverse=True)
 	full_data = desc_tfidf['sf']
 
-	top_ten_idx = ranked_list #first element is the input listing itself
+	top_ten_idx = ranked_list[:52] #first element is the input listing itself
 	top_ten_listings = []  #top ten listings and their data
 
 	# TO LAURA AND LIAM

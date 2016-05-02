@@ -61,6 +61,11 @@ a.btn a:hover{
 	color: #4285F4;
 }
 
+.highlight {
+	background-color: yellow;
+	display: inline !important;
+}
+
 .listing-container{
 	width: 80%;
 	text-align: center;

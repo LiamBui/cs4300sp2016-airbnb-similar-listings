@@ -13,6 +13,8 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 import urllib2
 import csv
+from stop_words import get_stop_words
+import string
 
 FEATURE_LIST = ["host_is_superhost", "host_identity_verified", "room_type", "accommodates", "bedrooms", "beds",
 "amenities", "price", "review_scores_accuracy",
@@ -95,7 +97,6 @@ def extract_listing_feature(k):
             result[f] = k[f]
     return result
 
-
 # Create your views here.
 def index(request):
     output_list = ''
@@ -131,9 +132,38 @@ def index(request):
         orig_listing['accommodates'] = orig_listing['person_capacity']
         orig_listing['thumbnail_url'] = get_medium_img_url(orig_listing['thumbnail_url'])
 
+        stop_words = get_stop_words('en')
+        stop_words += ['span', 'class', 'highlight', 'more', 'div', 'width', 'style', 'target', 'listing', 'container', 'score', 'meter', 'img', 'text', 'icons']
+
+        for listing in output: 
+            listing['similar_words'] = list(set(filter(lambda x: x in str(orig_listing['description']).split() and x not in stop_words, str(listing['description'].translate(None, string.punctuation)).split())))
+
         paginator = Paginator(output, 10)
         page_objects = paginator.page(1).object_list
+        '''
+        page_objects_new = []
         # print("OUTPUT: " +output)
+        showChar = 300
+        for thing in page_objects:
+            if(str(thing['room_type']) == 'Entire home/apt'):
+                room_type_icon = '/static/entirehome.png'
+                room_type_text = 'Entire Home/Apt'
+            elif (str(thing['room_type']) == 'Private room'):
+                room_type_icon = '/static/private.png'
+                room_type_text = 'Private Room'
+            else:
+                room_type_icon = '/static/shared.png'
+                room_type_text = 'Shared Room'
+            accom_icon = '/static/accommodates.png'
+            accom_text = 'Accomodates: ' + str(thing['accommodates'])
+            bedroom_icon = '/static/bedrooms.png'
+            bedroom_text = 'Bedrooms: ' + str(thing['bedrooms'])
+            html = '<div class = "listing-container"><div class ="listing-score">Similarity Score<div class="meter"><span style="width: '+ str(thing['sim_score']) + '%">' + str(thing['sim_score_rounded']) + '%</span></div></div><div class = "listing-info"><div class="listing-name"><a href="' + str(thing['listing_url']) + '" target="_blank">' + str(thing['name']) + '</a></div><br><div class = "quickinfo"><img src = "' + room_type_icon + '" class="icons"></img><p class="icon_labels">' + room_type_text + '</p></div><div class = "quickinfo"><img src = "' + accom_icon + '" class="icons"></img><p class="icon_labels">' + accom_text + '</p></div><div class = "quickinfo"><img src = "' + bedroom_icon + '" class="icons"></img><p class="icon_labels">' + bedroom_text + '</p></div><div class="quickinfo">' + str(thing['price']) + ' per Night</div></div><div class="listing-img-container"><img src="' + str(thing['thumbnail_url']) + '" /></div><div class="listing-text"><div class = "listing-description">Description: <br><span class="more">' + str(thing['description'])[:showChar] + '<span class="morecontent"><span>' + str(thing['description'])[showChar:len(str(thing['description'])) - showChar] + '</span><a href="" class="morelink">[...]</a></span></span></div><div class = "listing-summary">Summary: <br><span class="more">' + str(thing['summary'])[:showChar] + '<span class="morecontent"><span>' + str(thing['summary'])[showChar:len(str(thing['summary'])) - showChar] + '</span><a href="" class="morelink">[...]</a></span></span></div></div><br></div>'
+            page_objects_new += html
+            for word in thing['similar_words']:
+                for new_obj in page_objects_new:
+                    new_obj.replace(word, '<span class="highlight">' + word + '</span>')
+        '''
     if request.is_ajax():
         if request.GET.get('page_number'):
             page_number = request.GET.get('page_number');
