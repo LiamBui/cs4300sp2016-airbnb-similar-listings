@@ -15,8 +15,8 @@ $(document).on('click', '.toggle-button', function() {
 
 var showChar = 210;  // How many characters are shown by default
 var ellipsestext = "...";
-var moretext = "&nbsp;[...]";
-var lesstext = "&nbsp;<<";
+var moretext = "&nbsp;[Show More]";
+var lesstext = "&nbsp;[Show Less]";
     
 $(document).ready(function(){
     // $(window).bind('scroll', loadOnScroll);
@@ -103,10 +103,11 @@ function amenities(listing){
     var dynamic_class = "unique_id" + counter;
     attribute.value = dynamic_class;
     counter += 1;
+    
     var showChar = 300;
     var ellipsestext = "...";
-    var moretext = "&nbsp;[...]";
-    var lesstext = "&nbsp;<<";
+    var moretext = "&nbsp;[Show More]";
+    var lesstext = "&nbsp;[Show Less]";
     //var description = highlight_all_words(listing.description, listing.similar_words);
     //console.log(description);
     var html = '<div class = "listing-container"><div class = "listing-info"><div class="listing-name"><a href="' + listing.listing_url + '" target="_blank">' + listing.name + '</a></div><br><div class = "quickinfo"><img src = "' + room_type_icon + '" class="icons"></img><p class="icon_labels">' + room_type_text + '</p></div><div class = "quickinfo"><img src = "' + accom_icon + '" class="icons"></img><p class="icon_labels">' + accom_text + '</p></div><div class = "quickinfo"><img src = "' + bedroom_icon + '" class="icons"></img><p class="icon_labels">' + bedroom_text + '</p></div><div class="quickinfo">' + listing.price + ' per Night</div></div><div class="listing-img-container"><div class ="listing-score">Similarity Score<div class="meter"><span style="width: '+ listing.sim_score +'%">'+listing.sim_score_rounded+'%</span></div></div><img src="' + listing.thumbnail_url + '" /></div><div class="listing-text"><div class = "listing-description">Description: <br><span class="more">' + listing.description.substr(0, showChar) + '<span class="morecontent"><span>' + listing.description.substr(showChar, listing.description.length - showChar) + '</span><a href="" class="morelink">' + moretext + '</a></span></span></div><div class = "listing-summary">Space: <br><span class="more">' + listing.space.substr(0, showChar) + '<span class="morecontent"><span>' + listing.space.substr(showChar, listing.space.length - showChar) + '</span><a href="" class="morelink">' + moretext + '</a></span></span></div></div><br></div>';
@@ -152,6 +153,8 @@ var loadItems = function() {
         },
         complete: function(output, textStatus){
             console.log("completed");
+            // setTimeout(loadItems, 2000);
+            // $(window).bind('scroll', loadOnScroll);
         }
     });
 };
