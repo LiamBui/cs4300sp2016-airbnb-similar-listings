@@ -134,7 +134,8 @@ def index(request):
             orig_listing['thumbnail_url'] = get_medium_img_url(orig_listing['thumbnail_url'])
 
             stop_words = get_stop_words('en')
-            stop_words += ['span', 'class', 'highlight', 'more', 'div', 'width', 'style', 'target', 'listing', 'container', 'score', 'meter', 'img', 'text', 'icons']
+            stop_words += ['span', 'class', 'highlight', 'more', 'div', 'width', 'style', 'target', 'listing', 'container', 'score', 'meter', 'img', 'text', 'icons', 'spa', 'high', 'light']
+
 
             for listing in output: 
                 listing['similar_words'] = list(set(filter(lambda x: x in str(orig_listing['description']).split() and x not in stop_words, str(listing['description'].translate(None, string.punctuation)).split())))
