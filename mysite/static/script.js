@@ -2,6 +2,12 @@ var isPrototype = true;
 
 $(document).on('click', '.toggle-button', function() {
                 $(this).toggleClass('toggle-button-selected'); 
+                cur_loc = window.location.href;
+                if(cur_loc == "https://similairbnb.herokuapp.com/pt/")
+                    isPrototype = false;
+                else
+                    isPrototype = true;
+
                 isPrototype = !isPrototype;
                 if(isPrototype){
                     $('.version').text('Prototype')
@@ -9,7 +15,7 @@ $(document).on('click', '.toggle-button', function() {
                 }
                 else{
                     $('.version').text('Final')
-                    window.location = "https://similaribnb.herokuapp.com/pt/";
+                    window.location = "https://similairbnb.herokuapp.com/pt/";
                 }
                 console.log(isPrototype)
  });
