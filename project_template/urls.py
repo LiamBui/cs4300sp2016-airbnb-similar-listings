@@ -6,47 +6,31 @@ import urllib2
 import time
 import json
 import pickle
+import sys
 
 amazon_s3 = 'https://s3.amazonaws.com/similairbnb/'
 
 
 def desc_tfidf_initialization():
-	# nyc_url = 'https://s3.amazonaws.com/similairbnb/filtered_nyc_listings.csv'
 	sf_url = 'https://s3.amazonaws.com/similairbnb/filtered_sf_listings.csv'
-
-	
-
 	# Turn data into dicts of id to dict
-	# nyc = {}
 	sf = {}
-	# for row in csv.DictReader(urllib2.urlopen(nyc_url), skipinitialspace=True):
-	# 	nyc[row['id']] = {k: v for k, v in row.items()}
-
+	
 	for row in csv.DictReader(urllib2.urlopen(sf_url), skipinitialspace=True):
 		sf[row['id']] = {k: v for k, v in row.items()}
 	
 	# Take out the descriptions and summaries of listings
-	# nyc_descript_dict = {}
 	sf_descript_dict = {}
 
-	# for d in nyc:
-	# 	nyc_descript_dict[d] = nyc[d]['description']+" "+nyc[d]['summary']
-
 	for d in sf:
-		sf_descript_dict[d] = sf[d]['description']+" "+sf[d]['summary']
+		sf_descript_dict[d] = sf[d]['description']+" "+sf[d]['space']
 
 	sf_listing_index_to_id = {index:listing_id for index, listing_id in enumerate([d for d in sf_descript_dict])}
-	# nyc_listing_index_to_id = {index:listing_id for index, listing_id in enumerate([d for d in nyc_descript_dict])}
-
-	# nyc_descript_arr = [nyc_descript_dict[d] for d in nyc_descript_dict]
 	sf_descript_arr = [sf_descript_dict[d] for d in sf_descript_dict]
 
 	return {
-			# "nyc": nyc, 
     		"sf": sf,
-    		# "nyc_listing_index_to_id": nyc_listing_index_to_id,
     		"sf_listing_index_to_id": sf_listing_index_to_id,
-    		# "nyc_descript_arr": nyc_descript_arr,
     		"sf_descript_arr": sf_descript_arr
     	}
 
@@ -54,18 +38,7 @@ def lda_initialization():
 	return pickle.load(open('data/final_lda_topics.pickle', 'r'))
 
 def feature_initializatoin():
-	# # nyc_index_out = amazon_s3 + 'nyc_index_processed.pickle'
-	# sf_index_out = amazon_s3 + 'sf_index_processed.pickle'
-	# # nyc_out = amazon_s3 + 'nyc_data_processed.pickle'
-	# sf_out = amazon_s3 + 'sf_data_processed.pickle'
-
-	# # nyc_data = pickle.load(urllib2.urlopen(nyc_out, 'r'))
-	# sf_data = pickle.load(urllib2.urlopen(sf_out))
-	# # nyc_index = pickle.load(urllib2.urlopen(nyc_index_out, 'r'))
-	# sf_index = pickle.load(urllib2.urlopen(sf_index_out))
-
 	sf_data = pickle.load(open('data/sf_data_processed.pickle', 'r'))
-	# nyc_index = pickle.load(urllib2.urlopen(nyc_index_out, 'r'))
 	sf_index = pickle.load(open('data/sf_index_processed.pickle', 'r'))
 	return (sf_data, sf_index)
 

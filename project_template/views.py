@@ -127,7 +127,7 @@ def index(request):
         # This is the function that returns the final list with all three components combined
         output = similarity(data['listing'], listing_reviews, extracted_data)
         
-        orig_listing = {k: data['listing'][k] for k in ('room_type', 'description', 'price', 'bedrooms', 'person_capacity', 'summary', 'name','thumbnail_url', 'amenities')}
+        orig_listing = {k: data['listing'][k] for k in ('room_type', 'description', 'price', 'bedrooms', 'person_capacity', 'space', 'name','thumbnail_url', 'amenities')}
         orig_listing['listing_url'] = search
         orig_listing['accommodates'] = orig_listing['person_capacity']
         orig_listing['thumbnail_url'] = get_medium_img_url(orig_listing['thumbnail_url'])

@@ -79,11 +79,12 @@
                         {% autoescape off %}
                         {{ orig_listing.description|more }}
                         {% endautoescape %}</div>
-                        <div class = "listing-summary">Summary: <br>
+                        <div class = "listing-summary">Space: <br>
                         {% autoescape off %}
-                        {{ orig_listing.summary|more }}
+                        {{ orig_listing.space|more }}
                         {% endautoescape %}
                         </div>
+
                     </div>
                     <br>
                 </div>
@@ -94,11 +95,7 @@
             <h1>Search Results</h1><br>
             {% for listing in output %}
                 <div class = "listing-container">
-                    <div class ="listing-score">Similarity Score
-                        <div class="meter">
-                            <span style="width: {{listing.sim_score}}%">{{listing.sim_score_rounded}}%</span>
-                        </div>
-                    </div>
+                    
                     
                     <div class = "listing-info">
                         <div class="listing-name">
@@ -117,6 +114,11 @@
                         <div class="quickinfo">{{ listing.price }} per Night</div>
                     </div>
                     <div class="listing-img-container">
+                        <div class ="listing-score">Similarity Score
+                            <div class="meter">
+                                <span style="width: {{listing.sim_score}}%">{{listing.sim_score_rounded}}%</span>
+                            </div>
+                        </div>
                         <img src="{{ listing.thumbnail_url }}" />
                     </div>
                     <div class="listing-text">
@@ -127,9 +129,9 @@
                             {{ listing.description|highlight:listing.similar_words }}
                             {% endautoescape %}
                         </div>
-                        <div class = "listing-summary">Summary: <br>
+                        <div class = "listing-summary">Space: <br>
                             {% autoescape off %}
-                            {{ listing.summary|highlight:listing.similar_words }}
+                            {{ listing.space|highlight:listing.similar_words }}
                             {% endautoescape %}
                             </div>
                     </div>

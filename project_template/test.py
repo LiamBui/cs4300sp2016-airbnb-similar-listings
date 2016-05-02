@@ -88,7 +88,7 @@ def lda_reviews(v):
 
 def similarity(data, reviews, extracted):
 	feature_sim = find_similar_features(extracted, data['id'])
-	descript_sim = find_similar_descript(data['description'] + " " + data['summary'])
+	descript_sim = find_similar_descript(data['description'] + " " + data['space'])
 	lda_results = lda_reviews(reviews)
 
 	desc_tfidf = urls.desc_tfidf
@@ -104,7 +104,11 @@ def similarity(data, reviews, extracted):
 	
 	for k, v in combined.iteritems():
 		combined[k] = v / max_score
+<<<<<<< Updated upstream
 	#print(combined.values()[:100],max_score)
+=======
+	# print(combined.values()[:100],max_score)
+>>>>>>> Stashed changes
 	ranked_list = sorted(combined.items(), key=operator.itemgetter(1), reverse=True)
 	full_data = desc_tfidf['sf']
 
@@ -118,7 +122,7 @@ def similarity(data, reviews, extracted):
 	    listing_data = full_data[i]
 	    listing_data["thumbnail_url"] = get_medium_img_url(listing_data["thumbnail_url"])
 	    sub_dict = {k: listing_data[k] for k in ('room_type','listing_url', 'description', 'price', 'bedrooms', 'accommodates', 
-	                                       'summary', 'name','thumbnail_url', 'amenities')}
+	                                       'space', 'name','thumbnail_url', 'amenities')}
 	    sub_dict['sim_score'] = sim*100
 	    sub_dict['sim_score_rounded'] = round(sim*100,2)
 	    sub_dict['amenities'] = sub_dict['amenities'].replace('{','').replace('}','').replace('"','').replace(',',', ')
