@@ -50,7 +50,6 @@
             <h1>Listing Input</h1><br>
                 <div class = "listing-container">
                     <div class = "listing-info">
-                        
                         <div class="listing-name">
                             <a href="{{ orig_listing.listing_url }}" target="_blank">
                                 {{ orig_listing.name }}
@@ -62,10 +61,20 @@
                         <div class="quickinfo" id ="listing-bedrooms"><img id="bedroom_icon" class="icons"></img><p class='icon_labels' id='orig-bed'></p></div>
                         <div class="quickinfo" id="listing-price">${{ orig_listing.price }} per Night</div>
                     </div>
+                    <br>
                     <div class="listing-img-container">
                         <img src="{{ orig_listing.thumbnail_url }}" />
                     </div>
                     <div class="listing-text">
+                        <div class="listing-amenities">Amenities:<br>
+                        {% for amen in orig_listing.amenities %}
+                            {% if forloop.counter == orig_listing.amenities|length %}
+                                <p>{{amen}} </p>
+                            {% else %}
+                                <p>{{amen}},</p>
+                             {% endif %}
+                        {% endfor %}
+                        </div>
                         <div class = "listing-description">Description: <br>
                         {% autoescape off %}
                         {{ orig_listing.description|more }}
@@ -111,6 +120,8 @@
                         <img src="{{ listing.thumbnail_url }}" />
                     </div>
                     <div class="listing-text">
+                        <div class="listing-amenities">Amenities: <br>{{listing.amenities}}
+                        </div>
                         <div class = "listing-description">Description: <br>
                             {% autoescape off %}
                             {{ listing.description|highlight:listing.similar_words }}
