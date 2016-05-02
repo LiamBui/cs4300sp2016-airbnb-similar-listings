@@ -118,7 +118,7 @@ def similarity(data, reviews, extracted):
 	    listing_data = full_data[i]
 	    listing_data["thumbnail_url"] = get_medium_img_url(listing_data["thumbnail_url"])
 	    sub_dict = {k: listing_data[k] for k in ('room_type','listing_url', 'description', 'price', 'bedrooms', 'accommodates', 
-	                                       'summary', 'name','thumbnail_url')}
+	                                       'summary', 'name','thumbnail_url', 'amenities')}
 	    top_ten_listings.append(sub_dict)
 	    sub_dict['sim_score'] = sim*100
 	    sub_dict['sim_score_rounded'] = round(sim*100,2)
