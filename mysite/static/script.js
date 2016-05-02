@@ -5,9 +5,11 @@ $(document).on('click', '.toggle-button', function() {
                 isPrototype = !isPrototype;
                 if(isPrototype){
                     $('.version').text('Prototype')
+                    window.location = "https://airbnb-similar-listings.herokuapp.com/pt/";
                 }
                 else{
                     $('.version').text('Final')
+                    window.location = "https://similaribnb.herokuapp.com/pt/";
                 }
                 console.log(isPrototype)
  });
