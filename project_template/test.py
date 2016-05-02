@@ -121,6 +121,7 @@ def similarity(data, reviews, extracted):
 	                                       'summary', 'name','thumbnail_url', 'amenities')}
 	    sub_dict['sim_score'] = sim*100
 	    sub_dict['sim_score_rounded'] = round(sim*100,2)
+	    sub_dict['amenities'] = sub_dict['amenities'].replace('{','').replace('}','').replace('"','').replace(',',', ')
 	    top_ten_listings.append(sub_dict)
 	return top_ten_listings
 
