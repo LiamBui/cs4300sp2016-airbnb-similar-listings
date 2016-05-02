@@ -66,7 +66,6 @@ def find_similar_features(data, listing_id):
 		results[listing_id] = sim_list[index]
 	return results
 
-# THIS FUNCTION IS NOT CALLED YET, NEED LDA FILES
 def lda_reviews(v):
 	reviews_data = urls.lda_data 
 	
