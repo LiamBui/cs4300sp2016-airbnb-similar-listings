@@ -105,67 +105,68 @@ def index(request):
     search = ''
     page_objects = []
     if request.GET.get('AirbnbURL'):
-        headers = {"User-agent":"Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36"}
-        search = request.GET.get('AirbnbURL')
-        if (search.find('?') == -1):
-            search_id = search[search.find('rooms/')+6:]
-        else:
-            search_id = search[search.find('rooms/')+6:search.find('?')]
-        url = 'https://api.airbnb.com/v2/listings/' + search_id + '?client_id=3092nxybyb0otqw18e8nh5nty&_format=v1_legacy_for_p3'
-
-        review_url = "https://api.airbnb.com/v2/reviews?client_id=3092nxybyb0otqw18e8nh5nty&listing_id="+search_id+"&role=all"
-        
-        api_request = urllib2.Request(url, headers=headers)
-        review_request = urllib2.Request(review_url, headers=headers)
-
-        data = json.loads(urllib2.urlopen(api_request).read())
-        # get reviews
-        listing_reviews = load_reviews(json.loads(urllib2.urlopen(review_request).read()))
-        # extract features and construct a vector of these features
-        extracted_data = extract_listing_feature(data['listing'])
-
-        # This is the function that returns the final list with all three components combined
-        output = similarity(data['listing'], listing_reviews, extracted_data)
-        
-        orig_listing = {k: data['listing'][k] for k in ('room_type', 'description', 'price', 'bedrooms', 'person_capacity', 'space', 'name','thumbnail_url', 'amenities')}
-        orig_listing['listing_url'] = search
-        orig_listing['accommodates'] = orig_listing['person_capacity']
-        orig_listing['thumbnail_url'] = get_medium_img_url(orig_listing['thumbnail_url'])
-
-        stop_words = get_stop_words('en')
-        stop_words += ['span', 'class', 'highlight', 'more', 'div', 'width', 'style', 'target', 'listing', 'container', 'score', 'meter', 'img', 'text', 'icons']
-
-        for listing in output: 
-            listing['similar_words'] = list(set(filter(lambda x: x in str(orig_listing['description']).split() and x not in stop_words, str(listing['description'].translate(None, string.punctuation)).split())))
-
-        paginator = Paginator(output, 10)
-        page_objects = paginator.page(1).object_list
-        '''
-        page_objects_new = []
-        # print("OUTPUT: " +output)
-        showChar = 300
-        for thing in page_objects:
-            if(str(thing['room_type']) == 'Entire home/apt'):
-                room_type_icon = '/static/entirehome.png'
-                room_type_text = 'Entire Home/Apt'
-            elif (str(thing['room_type']) == 'Private room'):
-                room_type_icon = '/static/private.png'
-                room_type_text = 'Private Room'
+        if not request.GET.get('page_number'):
+            headers = {"User-agent":"Mozilla/5.0 (Windows NT 6.1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/41.0.2228.0 Safari/537.36"}
+            search = request.GET.get('AirbnbURL')
+            if (search.find('?') == -1):
+                search_id = search[search.find('rooms/')+6:]
             else:
-                room_type_icon = '/static/shared.png'
-                room_type_text = 'Shared Room'
-            accom_icon = '/static/accommodates.png'
-            accom_text = 'Accomodates: ' + str(thing['accommodates'])
-            bedroom_icon = '/static/bedrooms.png'
-            bedroom_text = 'Bedrooms: ' + str(thing['bedrooms'])
-            html = '<div class = "listing-container"><div class ="listing-score">Similarity Score<div class="meter"><span style="width: '+ str(thing['sim_score']) + '%">' + str(thing['sim_score_rounded']) + '%</span></div></div><div class = "listing-info"><div class="listing-name"><a href="' + str(thing['listing_url']) + '" target="_blank">' + str(thing['name']) + '</a></div><br><div class = "quickinfo"><img src = "' + room_type_icon + '" class="icons"></img><p class="icon_labels">' + room_type_text + '</p></div><div class = "quickinfo"><img src = "' + accom_icon + '" class="icons"></img><p class="icon_labels">' + accom_text + '</p></div><div class = "quickinfo"><img src = "' + bedroom_icon + '" class="icons"></img><p class="icon_labels">' + bedroom_text + '</p></div><div class="quickinfo">' + str(thing['price']) + ' per Night</div></div><div class="listing-img-container"><img src="' + str(thing['thumbnail_url']) + '" /></div><div class="listing-text"><div class = "listing-description">Description: <br><span class="more">' + str(thing['description'])[:showChar] + '<span class="morecontent"><span>' + str(thing['description'])[showChar:len(str(thing['description'])) - showChar] + '</span><a href="" class="morelink">[...]</a></span></span></div><div class = "listing-summary">Summary: <br><span class="more">' + str(thing['summary'])[:showChar] + '<span class="morecontent"><span>' + str(thing['summary'])[showChar:len(str(thing['summary'])) - showChar] + '</span><a href="" class="morelink">[...]</a></span></span></div></div><br></div>'
-            page_objects_new += html
-            for word in thing['similar_words']:
-                for new_obj in page_objects_new:
-                    new_obj.replace(word, '<span class="highlight">' + word + '</span>')
-        '''
-    if request.is_ajax():
-        if request.GET.get('page_number'):
+                search_id = search[search.find('rooms/')+6:search.find('?')]
+            url = 'https://api.airbnb.com/v2/listings/' + search_id + '?client_id=3092nxybyb0otqw18e8nh5nty&_format=v1_legacy_for_p3'
+
+            review_url = "https://api.airbnb.com/v2/reviews?client_id=3092nxybyb0otqw18e8nh5nty&listing_id="+search_id+"&role=all"
+            
+            api_request = urllib2.Request(url, headers=headers)
+            review_request = urllib2.Request(review_url, headers=headers)
+
+            data = json.loads(urllib2.urlopen(api_request).read())
+            # get reviews
+            listing_reviews = load_reviews(json.loads(urllib2.urlopen(review_request).read()))
+            # extract features and construct a vector of these features
+            extracted_data = extract_listing_feature(data['listing'])
+
+            # This is the function that returns the final list with all three components combined
+            output = similarity(data['listing'], listing_reviews, extracted_data)
+            
+            orig_listing = {k: data['listing'][k] for k in ('room_type', 'description', 'price', 'bedrooms', 'person_capacity', 'space', 'name','thumbnail_url', 'amenities')}
+            orig_listing['listing_url'] = search
+            orig_listing['accommodates'] = orig_listing['person_capacity']
+            orig_listing['thumbnail_url'] = get_medium_img_url(orig_listing['thumbnail_url'])
+
+            stop_words = get_stop_words('en')
+            stop_words += ['span', 'class', 'highlight', 'more', 'div', 'width', 'style', 'target', 'listing', 'container', 'score', 'meter', 'img', 'text', 'icons']
+
+            for listing in output: 
+                listing['similar_words'] = list(set(filter(lambda x: x in str(orig_listing['description']).split() and x not in stop_words, str(listing['description'].translate(None, string.punctuation)).split())))
+
+            global paginator 
+            paginator = Paginator(output, 10)
+            page_objects = paginator.page(1).object_list
+            '''
+            page_objects_new = []
+            # print("OUTPUT: " +output)
+            showChar = 300
+            for thing in page_objects:
+                if(str(thing['room_type']) == 'Entire home/apt'):
+                    room_type_icon = '/static/entirehome.png'
+                    room_type_text = 'Entire Home/Apt'
+                elif (str(thing['room_type']) == 'Private room'):
+                    room_type_icon = '/static/private.png'
+                    room_type_text = 'Private Room'
+                else:
+                    room_type_icon = '/static/shared.png'
+                    room_type_text = 'Shared Room'
+                accom_icon = '/static/accommodates.png'
+                accom_text = 'Accomodates: ' + str(thing['accommodates'])
+                bedroom_icon = '/static/bedrooms.png'
+                bedroom_text = 'Bedrooms: ' + str(thing['bedrooms'])
+                html = '<div class = "listing-container"><div class ="listing-score">Similarity Score<div class="meter"><span style="width: '+ str(thing['sim_score']) + '%">' + str(thing['sim_score_rounded']) + '%</span></div></div><div class = "listing-info"><div class="listing-name"><a href="' + str(thing['listing_url']) + '" target="_blank">' + str(thing['name']) + '</a></div><br><div class = "quickinfo"><img src = "' + room_type_icon + '" class="icons"></img><p class="icon_labels">' + room_type_text + '</p></div><div class = "quickinfo"><img src = "' + accom_icon + '" class="icons"></img><p class="icon_labels">' + accom_text + '</p></div><div class = "quickinfo"><img src = "' + bedroom_icon + '" class="icons"></img><p class="icon_labels">' + bedroom_text + '</p></div><div class="quickinfo">' + str(thing['price']) + ' per Night</div></div><div class="listing-img-container"><img src="' + str(thing['thumbnail_url']) + '" /></div><div class="listing-text"><div class = "listing-description">Description: <br><span class="more">' + str(thing['description'])[:showChar] + '<span class="morecontent"><span>' + str(thing['description'])[showChar:len(str(thing['description'])) - showChar] + '</span><a href="" class="morelink">[...]</a></span></span></div><div class = "listing-summary">Summary: <br><span class="more">' + str(thing['summary'])[:showChar] + '<span class="morecontent"><span>' + str(thing['summary'])[showChar:len(str(thing['summary'])) - showChar] + '</span><a href="" class="morelink">[...]</a></span></span></div></div><br></div>'
+                page_objects_new += html
+                for word in thing['similar_words']:
+                    for new_obj in page_objects_new:
+                        new_obj.replace(word, '<span class="highlight">' + word + '</span>')
+            '''
+        else:
             page_number = request.GET.get('page_number');
             try:
                 page_objects = paginator.page(page_number).object_list
