@@ -62,7 +62,11 @@ a.btn a:hover{
 }
 
 .highlight {
-	background-color: yellow;
+	background-color: #fd5c63;
+	border-radius: 3px;
+	color: #fff;
+	padding:2px;
+	margin-bottom: 2px;
 	display: inline !important;
 }
 
