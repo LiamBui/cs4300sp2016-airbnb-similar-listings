@@ -89,6 +89,7 @@ def similarity(data, reviews, extracted):
 	feature_sim = find_similar_features(extracted, data['id'])
 	descript_sim = find_similar_descript(data['description'] + " " + data['space'])
 	lda_results = lda_reviews(reviews)
+	min_accom = data['person_capacity']
 
 	desc_tfidf = urls.desc_tfidf
 	combined = {}
@@ -107,7 +108,7 @@ def similarity(data, reviews, extracted):
 	ranked_list = sorted(combined.items(), key=operator.itemgetter(1), reverse=True)
 	full_data = desc_tfidf['sf']
 
-	top_ten_idx = ranked_list[:100] #first element is the input listing itself
+	top_ten_idx = ranked_list[:20] #first element is the input listing itself
 	top_ten_listings = []  #top ten listings and their data
 
 	# TO LAURA AND LIAM
@@ -115,13 +116,13 @@ def similarity(data, reviews, extracted):
 	# the result returned
 	for (i, sim) in top_ten_idx:
 	    listing_data = full_data[i]
-	    listing_data["thumbnail_url"] = get_medium_img_url(listing_data["thumbnail_url"])
-	    sub_dict = {k: listing_data[k] for k in ('room_type','listing_url', 'description', 'price', 'bedrooms', 'accommodates', 
-	                                       'space', 'name','thumbnail_url', 'amenities')}
-	    sub_dict['sim_score'] = sim*100
-	    sub_dict['sim_score_rounded'] = round(sim*100,2)
-	    sub_dict['amenities'] = sub_dict['amenities'].replace('{','').replace('}','').replace('"','').replace(',',', ')
-	    top_ten_listings.append(sub_dict)
+	    if min_accom <= int(listing_data['accommodates']):
+	    	listing_data["thumbnail_url"] = get_medium_img_url(listing_data["thumbnail_url"])
+	    	sub_dict = {k: listing_data[k] for k in ('room_type','listing_url', 'description', 'price', 'bedrooms', 'accommodates', 'space', 'name','thumbnail_url', 'amenities')}
+	    	sub_dict['sim_score'] = sim*100
+	    	sub_dict['sim_score_rounded'] = round(sim*100,2)
+	    	sub_dict['amenities'] = sub_dict['amenities'].replace('{','').replace('}','').replace('"','').replace(',',', ')
+	    	top_ten_listings.append(sub_dict)
 	return top_ten_listings
 
 
