@@ -97,8 +97,6 @@ def similarity(data, reviews, extracted):
 		if k != data['id']:
 			if k in lda_results:
 				combined[k] = (v + descript_sim[k] + lda_results[k])/3
-			else: 
-				combined[k] = (v + descript_sim[k])/3
 
 	max_score = max(combined.values())
 	
