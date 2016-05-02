@@ -187,6 +187,11 @@ a.btn a:hover{
 .listing-info{
 	width: 70%;
 }
+
+.original-listing .listing-info{
+	float: right;
+}
+
 .listing-score{
 	width:100%;
 	margin-bottom: 20px;

@@ -66,7 +66,6 @@ def find_similar_features(data, listing_id):
 		results[listing_id] = sim_list[index]
 	return results
 
-# THIS FUNCTION IS NOT CALLED YET, NEED LDA FILES
 def lda_reviews(v):
 	reviews_data = urls.lda_data 
 	
@@ -104,11 +103,7 @@ def similarity(data, reviews, extracted):
 	
 	for k, v in combined.iteritems():
 		combined[k] = v / max_score
-<<<<<<< Updated upstream
-	#print(combined.values()[:100],max_score)
-=======
-	# print(combined.values()[:100],max_score)
->>>>>>> Stashed changes
+
 	ranked_list = sorted(combined.items(), key=operator.itemgetter(1), reverse=True)
 	full_data = desc_tfidf['sf']
 
