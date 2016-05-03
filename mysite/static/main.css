@@ -101,6 +101,25 @@ a.btn a:hover{
 
 .listing-name{
 	font-weight: bold;
+	margin-bottom: 10px;
+}
+
+.listing-icons{
+	height: 100%;
+}
+
+.listing-price, .result-price{
+	margin-bottom: 0px;
+	position: relative;
+	top: 16%;
+}
+
+.listing-price span, .result-price span{
+	font-size: 38px;
+}
+
+#bedroom-icon{
+	margin-top: 1px;
 }
 
 .listing-img-container{
@@ -196,6 +215,7 @@ a.btn a:hover{
 
 .listing-info{
 	width: 70%;
+	height: 20%;
 }
 
 .original-listing .listing-info{
@@ -214,7 +234,7 @@ a.btn a:hover{
 .meter { 
 	height: 30px;  /* Can be anything */
 	position: relative;
-	background: #eee;
+	background: #dcdcdc;
 	-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
 	border-radius: 10px;
