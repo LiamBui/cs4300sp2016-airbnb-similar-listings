@@ -126,7 +126,7 @@ def index(request):
             extracted_data = extract_listing_feature(data['listing'])
 
             # This is the function that returns the final list with all three components combined
-            output = similarity(data['listing'], listing_reviews, extracted_data)
+            output = similarity(data['listing'], listing_reviews, extracted_data, data['listing']['amenities'])
             
             orig_listing = {k: data['listing'][k] for k in ('room_type', 'description', 'price', 'bedrooms', 'person_capacity', 'space', 'name','thumbnail_url', 'amenities')}
             orig_listing['price'] = "{0:.2f}".format(float(orig_listing['price']))

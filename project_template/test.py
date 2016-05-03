@@ -85,7 +85,7 @@ def lda_reviews(v):
 
 	return results
 
-def similarity(data, reviews, extracted):
+def similarity(data, reviews, extracted, input_amenities):
 	feature_sim = find_similar_features(extracted, data['id'])
 	descript_sim = find_similar_descript(data['description'] + " " + data['space'])
 	lda_results = lda_reviews(reviews)
@@ -120,6 +120,9 @@ def similarity(data, reviews, extracted):
 	    	sub_dict['sim_score'] = sim*100
 	    	sub_dict['sim_score_rounded'] = round(sim*100,2)
 	    	sub_dict['amenities'] = sub_dict['amenities'].replace('{','').replace('}','').replace('"','').replace(',',', ')
+	    	sim_amenities = ', '.join(list(set(sub_dict['amenities'].split(', ')) & set(input_amenities)))
+	    	sub_dict['sim_amenities'] = sim_amenities
+
 	    	top_ten_listings.append(sub_dict)
 	return top_ten_listings
 
