@@ -129,7 +129,7 @@
                     <div class="listing-text">
                         <div class="listing-amenities">Amenities: <br>
                         {% autoescape off %}
-                        {{listing.amenities|highlight:listing.sim_amenities}}
+                        {{listing.amenities|highlight_amenities:listing.sim_amenities}}
                         {% endautoescape %}
                         </div>
                         <div class = "listing-description">Description: <br>

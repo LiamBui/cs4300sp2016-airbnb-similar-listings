@@ -36,7 +36,6 @@ def lda_reviews((data, thread_id)):
 	start = time.time()
 	counter = 0
 	for k, v in reviews_data.iteritems():
-		print("Thread #" +str(thread_id)+" at: "+str(float(counter)/len(data)*100)+"%")
 
 		v = [[stemmer.stem(i) for i in tokenizer.tokenize(r.lower()) if not i in en_stopwords] for r in v]
 		dictionary = corpora.Dictionary(v)
