@@ -1,17 +1,29 @@
 var isPrototype = true;
+var isHighlighted = false;
 
-$(document).on('click', '.toggle-button', function() {
-                $(this).toggleClass('toggle-button-selected'); 
-                isPrototype = !isPrototype;
-                if(!isPrototype){
-                    $('.version').text('Hide similarities');
-                    $('.highlights').addClass('highlight');
-                }
-                else{
-                    $('.version').text('Show similarities');
-                    $('.highlights').removeClass('highlight');
-                }
+$(document).on('click', '#proto', function() { 
+    $(this).toggleClass('toggle-button-selected'); 
+    isPrototype = !isPrototype
+    if(isPrototype){
+        $('.version').text('Prototype')
+    }
+    else{
+        $('.version').text('Final')
+    }
+    console.log('proto: ' + isPrototype)              
  });
+
+$(document).on('click', '#highlight-sim', function(){
+    $(this).toggleClass('toggle-button-selected'); 
+                    isHighlighted = !isHighlighted
+                    if(isHighlighted){
+                        $('.highlights').addClass('highlight');
+                    }
+                    else{
+                        $('.highlights').removeClass('highlight');
+                    }
+                console.log('highlight: ' + isHighlighted)
+});
 
 var showChar = 210;  // How many characters are shown by default
 var ellipsestext = "...";
@@ -110,7 +122,7 @@ function amenities(listing){
     var lesstext = "&nbsp;[Show Less]";
     //var description = highlight_all_words(listing.description, listing.similar_words);
     //console.log(description);
-    var html = '<div class = "listing-container"><div class = "listing-info"><div class="listing-name"><a href="' + listing.listing_url + '" target="_blank">' + listing.name + '</a></div><br><div class = "quickinfo"><img src = "' + room_type_icon + '" class="icons"></img><p class="icon_labels">' + room_type_text + '</p></div><div class = "quickinfo"><img src = "' + accom_icon + '" class="icons"></img><p class="icon_labels">' + accom_text + '</p></div><div class = "quickinfo"><img src = "' + bedroom_icon + '" class="icons"></img><p class="icon_labels">' + bedroom_text + '</p></div><div class="quickinfo">' + listing.price + ' per Night</div></div><div class="listing-img-container"><div class ="listing-score">Similarity Score<div class="meter"><span style="width: '+ listing.sim_score +'%">'+listing.sim_score_rounded+'%</span></div></div><img src="' + listing.thumbnail_url + '" /></div><div class="listing-text"><div class = "listing-description">Description: <br><span class="more">' + listing.description.substr(0, showChar) + '<span class="morecontent"><span>' + listing.description.substr(showChar, listing.description.length - showChar) + '</span><a href="" class="morelink">' + moretext + '</a></span></span></div><div class = "listing-summary">Space: <br><span class="more">' + listing.space.substr(0, showChar) + '<span class="morecontent"><span>' + listing.space.substr(showChar, listing.space.length - showChar) + '</span><a href="" class="morelink">' + moretext + '</a></span></span></div></div><br></div>';
+    var html = '<div class = "listing-container"><div class = "listing-info"><div class="listing-name"><a href="' + listing.listing_url + '" target="_blank">' + listing.name + '</a></div><br><div class = "quickinfo"><img src = "' + room_type_icon + '" class="icons"></img><p class="icon_labels">' + room_type_text + '</p></div><div class = "quickinfo"><img src = "' + accom_icon + '" class="icons"></img><p class="icon_labels">' + accom_text + '</p></div><div class = "quickinfo"><img src = "' + bedroom_icon + '" class="icons"></img><p class="icon_labels">' + bedroom_text + '</p></div><div class="quickinfo">' + listing.price + ' per Night</div></div><div class="listing-img-container"><div class ="listing-score">Similarity Score<div class="meter"><span style="width: '+ listing.sim_score +'%">'+listing.sim_score_rounded+'%</span></div></div><img src="' + listing.thumbnail_url + '" /></div><div class="listing-text"><div class="listing-amenities">Amenities: <br>' + listing.amenities + '</div><div class = "listing-description">Description: <br><span class="more">' + listing.description.substr(0, showChar) + '<span class="morecontent"><span>' + listing.description.substr(showChar, listing.description.length - showChar) + '</span><a href="" class="morelink">' + moretext + '</a></span></span></div><div class = "listing-summary">Space: <br><span class="more">' + listing.space.substr(0, showChar) + '<span class="morecontent"><span>' + listing.space.substr(showChar, listing.space.length - showChar) + '</span><a href="" class="morelink">' + moretext + '</a></span></span></div></div><br></div>';
     html = highlight_all_words(html, listing.similar_words);
     dynamic_element.innerHTML = html;
     //$(dynamic_element).attr("style", ".morecontent {display: inline;} .morecontent span {display: none;} .morelink {display: inline-block; font-family: serif; font-size: 1em !important;} br {display: block !important} .highlight {background-color: yellow; display: inline !important}");

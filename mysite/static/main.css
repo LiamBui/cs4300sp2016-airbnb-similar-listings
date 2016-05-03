@@ -101,6 +101,25 @@ a.btn a:hover{
 
 .listing-name{
 	font-weight: bold;
+	margin-bottom: 10px;
+}
+
+.listing-icons{
+	height: 100%;
+}
+
+.listing-price, .result-price{
+	margin-bottom: 0px;
+	position: relative;
+	top: 16%;
+}
+
+.listing-price span, .result-price span{
+	font-size: 38px;
+}
+
+#bedroom-icon{
+	margin-top: 1px;
 }
 
 .listing-img-container{
@@ -122,11 +141,11 @@ a.btn a:hover{
 .toggle-button { 
 	background-color: white; 
 	margin: 5px 0; 
-	border-radius: 20px; 
+	border-radius: 10px; 
 	border: 2px solid #D0D0D0; 
-	height: 24px; 
+	height: 15px; 
 	cursor: pointer; 
-	width: 50px; 
+	width: 30px; 
 	position: absolute; 
 	display: inline-block; 
 	user-select: none; 
@@ -145,8 +164,8 @@ a.btn a:hover{
 	left: 0; 
 	top: 0; 
 	border-radius: 100%; 
-	width: 30px; 
-	height: 30px; 
+	width: 10px; 
+	height: 15px; 
 	background-color: white; 
 	float: left; 
 	margin: -3px 0 0 -3px; 
@@ -156,13 +175,22 @@ a.btn a:hover{
 	background-color: #fd5c63; 
 	border: 2px solid #fd5c63; }
 .toggle-button-selected button { 
-	left: 26px; 
-	top: 0; 
+	left: 14px; 
+	top: -1; 
 	margin: 0; 
 	border: none; 
-	width: 24px; 
-	height: 24px; 
+	width: 15px; 
+	height: 15px; 
 	box-shadow: 0 0 4px rgba(0,0,0,0.1); }
+.toggle-button p{
+	color: #fff;
+	margin-left: 125%;
+	margin-top:-5px;
+}
+
+#highlight-sim{
+	margin-top:2.5%;
+}
 .version{
 	position: fixed;
 	top: 2%;
@@ -184,7 +212,7 @@ a.btn a:hover{
 
 .morelink {
     display: inline-block;
-    font-family: serif;
+    font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
     font-size: 1em !important;
 }
 
@@ -196,6 +224,7 @@ a.btn a:hover{
 
 .listing-info{
 	width: 70%;
+	height: 20%;
 }
 
 .original-listing .listing-info{
@@ -205,6 +234,8 @@ a.btn a:hover{
 .listing-score{
 	width:100%;
 	margin-bottom: 20px;
+	font-size: 16px;
+	font-weight: 500;
 }
 .quickinfo{
 	width:150px;
@@ -214,7 +245,7 @@ a.btn a:hover{
 .meter { 
 	height: 30px;  /* Can be anything */
 	position: relative;
-	background: #eee;
+	background: #dcdcdc;
 	-moz-border-radius: 10px;
 	-webkit-border-radius: 10px;
 	border-radius: 10px;

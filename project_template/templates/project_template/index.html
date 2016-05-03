@@ -21,12 +21,14 @@
             <p align="right">Airbnb Similar Listings</p>
             <p align="right">Ambar Soni (as2495) | Maggie Bi (yb89) | Liam Bui (lb598) | Laura Wade (ljw96) </p>
         </div>
-
-        <div class="toggle-button">
+        <div class="toggle-button" id="proto">
             <button></button>
-            <div class="version">
-                <p align="left">Show similarities</p>
-            </div>
+            <p align="left">Prototype</p>
+        </div>
+
+        <div class="toggle-button" id="highlight-sim">
+            <button></button>
+            <p align="left" id="highlight-label">Highlight</p>
         </div>
         
         
@@ -56,11 +58,12 @@
                                 {{ orig_listing.name }}
                             </a>
                         </div>
-                        <br>
-                        <div class="quickinfo" id="listing-roomtype"><img id="roomtype_icon" class="icons"></img><p class='icon_labels'id='orig-roomtype'></p></div>
-                        <div class="quickinfo" id="listing-accom"><img id="accom_icon" class="icons"></img><p class='icon_labels' id='orig-accom'></p></div>
-                        <div class="quickinfo" id ="listing-bedrooms"><img id="bedroom_icon" class="icons"></img><p class='icon_labels' id='orig-bed'></p></div>
-                        <div class="quickinfo" id="listing-price">${{ orig_listing.price }} per Night</div>
+                        <div class="listing-icons">
+                            <div class="quickinfo" id="listing-roomtype"><img id="roomtype_icon" class="icons"></img><p class='icon_labels'id='orig-roomtype'></p></div>
+                            <div class="quickinfo" id="listing-accom"><img id="accom_icon" class="icons"></img><p class='icon_labels' id='orig-accom'></p></div>
+                            <div class="quickinfo" id ="listing-bedrooms"><img src = "/static/bedrooms.png" class="icons"/><p class='icon_labels' id='orig-bed'></p></div>
+                            <div class="quickinfo listing-price"><span>${{ orig_listing.price }}</span>&nbsp; per night</div>
+                        </div>
                     </div>
                     <br>
                     <div class="listing-img-container">
@@ -104,15 +107,16 @@
                                 {{ listing.name }}
                             </a>
                         </div>
-                        <br>
-                        {% if listing.room_type == 'Entire home/apt' %}
-                            <div class = "quickinfo"><img src = "/static/entirehome.png" class="icons"></img><p class="icon_labels">Entire Home/Apt</p></div><div class = "quickinfo"><img src = "/static/accommodates.png" class="icons"></img><p class="icon_labels">Accommodates: {{listing.accommodates}}</p></div><div class = "quickinfo"><img src = "/static/bedrooms.png" class="icons"></img><p class="icon_labels">Bedrooms: {{listing.bedrooms}}</p></div>
-                        {% elif listing.room_type == 'Private room' %}
-                            <div class = "quickinfo"><img src = "/static/private.png" class="icons"></img><p class="icon_labels">Private Room</p></div><div class = "quickinfo"><img src = "/static/accommodates.png" class="icons"></img><p class="icon_labels">Accommodates: {{listing.accommodates}}</p></div><div class = "quickinfo"><img src = "/static/bedrooms.png" class="icons"></img><p class="icon_labels">Bedrooms: {{listing.bedrooms}}</p></div>
-                        {% else %}
-                            <div class = "quickinfo"><img src = "/static/shared.png" class="icons"></img><p class="icon_labels">Shared Room</p></div><div class = "quickinfo"><img src = "/static/accommodates.png" class="icons"></img><p class="icon_labels">Accommodates: {{listing.accommodates}}</p></div><div class = "quickinfo"><img src = "/static/bedrooms.png" class="icons"></img><p class="icon_labels">Bedrooms: {{listing.bedrooms}}</p></div>
-                        {% endif %}
-                        <div class="quickinfo">{{ listing.price }} per Night</div>
+                        <div class="listing-icons">
+                            {% if listing.room_type == 'Entire home/apt' %}
+                                <div class = "quickinfo"><img src = "/static/entirehome.png" class="icons"></img><p class="icon_labels">Entire Home/Apt</p></div><div class = "quickinfo"><img src = "/static/accommodates.png" class="icons"></img><p class="icon_labels">Accommodates: {{listing.accommodates}}</p></div><div class = "quickinfo"><img src = "/static/bedrooms.png" class="icons"></img><p class="icon_labels">Bedrooms: {{listing.bedrooms}}</p></div>
+                            {% elif listing.room_type == 'Private room' %}
+                                <div class = "quickinfo"><img src = "/static/private.png" class="icons"></img><p class="icon_labels">Private Room</p></div><div class = "quickinfo"><img src = "/static/accommodates.png" class="icons"></img><p class="icon_labels">Accommodates: {{listing.accommodates}}</p></div><div class = "quickinfo"><img src = "/static/bedrooms.png" class="icons"></img><p class="icon_labels">Bedrooms: {{listing.bedrooms}}</p></div>
+                            {% else %}
+                                <div class = "quickinfo"><img src = "/static/shared.png" class="icons"></img><p class="icon_labels">Shared Room</p></div><div class = "quickinfo"><img src = "/static/accommodates.png" class="icons"></img><p class="icon_labels">Accommodates: {{listing.accommodates}}</p></div><div class = "quickinfo"><img src = "/static/bedrooms.png" class="icons"></img><p class="icon_labels">Bedrooms: {{listing.bedrooms}}</p></div>
+                            {% endif %}
+                            <div class="quickinfo result-price"><span>{{ listing.price }}</span> per night</div>
+                        </div>
                     </div>
                     <div class="listing-img-container">
                         <div class ="listing-score">Similarity Score

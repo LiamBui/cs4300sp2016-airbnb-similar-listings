@@ -129,7 +129,6 @@ def index(request):
             output = similarity(data['listing'], listing_reviews, extracted_data, data['listing']['amenities'])
             
             orig_listing = {k: data['listing'][k] for k in ('room_type', 'description', 'price', 'bedrooms', 'person_capacity', 'space', 'name','thumbnail_url', 'amenities')}
-            orig_listing['price'] = "{0:.2f}".format(float(orig_listing['price']))
             orig_listing['listing_url'] = search
             orig_listing['accommodates'] = orig_listing['person_capacity']
             orig_listing['thumbnail_url'] = get_medium_img_url(orig_listing['thumbnail_url'])
