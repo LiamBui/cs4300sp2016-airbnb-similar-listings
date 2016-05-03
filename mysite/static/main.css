@@ -230,9 +230,6 @@ a.btn a:hover{
 .listing-info{
 	width: 70%;
 	height: 20%;
-}
-
-.original-listing .listing-info{
 	float: right;
 }
 
