@@ -122,11 +122,11 @@ a.btn a:hover{
 .toggle-button { 
 	background-color: white; 
 	margin: 5px 0; 
-	border-radius: 20px; 
+	border-radius: 10px; 
 	border: 2px solid #D0D0D0; 
-	height: 24px; 
+	height: 15px; 
 	cursor: pointer; 
-	width: 50px; 
+	width: 30px; 
 	position: absolute; 
 	display: inline-block; 
 	user-select: none; 
@@ -145,8 +145,8 @@ a.btn a:hover{
 	left: 0; 
 	top: 0; 
 	border-radius: 100%; 
-	width: 30px; 
-	height: 30px; 
+	width: 10px; 
+	height: 15px; 
 	background-color: white; 
 	float: left; 
 	margin: -3px 0 0 -3px; 
@@ -156,13 +156,22 @@ a.btn a:hover{
 	background-color: #fd5c63; 
 	border: 2px solid #fd5c63; }
 .toggle-button-selected button { 
-	left: 26px; 
-	top: 0; 
+	left: 14px; 
+	top: -1; 
 	margin: 0; 
 	border: none; 
-	width: 24px; 
-	height: 24px; 
+	width: 15px; 
+	height: 15px; 
 	box-shadow: 0 0 4px rgba(0,0,0,0.1); }
+.toggle-button p{
+	color: #fff;
+	margin-left: 125%;
+	margin-top:-5px;
+}
+
+#highlight-sim{
+	margin-top:3.5%;
+}
 .version{
 	position: fixed;
 	top: 2%;

@@ -1,17 +1,29 @@
 var isPrototype = true;
+var isHighlighted = false;
 
-$(document).on('click', '.toggle-button', function() {
-                $(this).toggleClass('toggle-button-selected'); 
-                isPrototype = !isPrototype;
-                if(!isPrototype){
-                    $('.version').text('Hide similarities');
-                    $('.highlights').addClass('highlight');
-                }
-                else{
-                    $('.version').text('Show similarities');
-                    $('.highlights').removeClass('highlight');
-                }
+$(document).on('click', '#proto', function() { 
+    $(this).toggleClass('toggle-button-selected'); 
+    isPrototype = !isPrototype
+    if(isPrototype){
+        $('.version').text('Prototype')
+    }
+    else{
+        $('.version').text('Final')
+    }
+    console.log('proto: ' + isPrototype)              
  });
+
+$(document).on('click', '#highlight-sim', function(){
+    $(this).toggleClass('toggle-button-selected'); 
+                    isHighlighted = !isHighlighted
+                    if(isHighlighted){
+                        $('.highlights').addClass('highlight');
+                    }
+                    else{
+                        $('.highlights').removeClass('highlight');
+                    }
+                console.log('highlight: ' + isHighlighted)
+});
 
 var showChar = 210;  // How many characters are shown by default
 var ellipsestext = "...";
