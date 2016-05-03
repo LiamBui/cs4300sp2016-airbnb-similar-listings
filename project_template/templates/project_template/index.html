@@ -127,7 +127,10 @@
                         <img src="{{ listing.thumbnail_url }}" />
                     </div>
                     <div class="listing-text">
-                        <div class="listing-amenities">Amenities: <br>{{listing.amenities}}
+                        <div class="listing-amenities">Amenities: <br>
+                        {% autoescape off %}
+                        {{listing.amenities|highlight:listing.sim_amenities}}
+                        {% endautoescape %}
                         </div>
                         <div class = "listing-description">Description: <br>
                             {% autoescape off %}
