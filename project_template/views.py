@@ -135,7 +135,7 @@ def index(request):
 
             stop_words = get_stop_words('en')
             stop_words += ['span', 'class', 'highlight', 'more', 'div', 'width', 'style', 'target', 'listing', 'container', 'score', 'meter', 'img', 'text', 'icons', 'spa', 'high', 'light']
-
+            stop_words += ['bed', 'room', 'kitchen', 'we', 'home', 'can', 'one', 'located', 'guests', 'guest', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'just', 'well', 'area', 'two', 'three', 'like', 'stay']
 
             for listing in output: 
                 listing['similar_words'] = list(set(filter(lambda x: x in str(orig_listing['description']).split() and x not in stop_words, str(listing['description'].translate(None, string.punctuation)).split())))
