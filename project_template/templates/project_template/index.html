@@ -126,12 +126,12 @@
                         </div>
                         <div class = "listing-description">Description: <br>
                             {% autoescape off %}
-                            {{ listing.description|to_highlight:listing.similar_words }}
+                            {{ listing.description|highlight:listing.similar_words }}
                             {% endautoescape %}
                         </div>
                         <div class = "listing-summary">Space: <br>
                             {% autoescape off %}
-                            {{ listing.space|to_highlight:listing.similar_words }}
+                            {{ listing.space|highlight:listing.similar_words }}
                             {% endautoescape %}
                             </div>
                     </div>
