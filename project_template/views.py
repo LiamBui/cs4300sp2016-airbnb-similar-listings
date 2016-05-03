@@ -144,7 +144,7 @@ def index(request):
                 orig_listing['thumbnail_url'] = get_medium_img_url(orig_listing['thumbnail_url'])
 
                 stop_words = get_stop_words('en')
-                stop_words += ['span', 'class', 'highlight', 'more', 'div', 'width', 'style', 'target', 'listing', 'container', 'score', 'meter', 'img', 'text', 'icons', 'spa', 'high', 'light']
+                stop_words += ['span', 'class', 'highlight', 'more', 'div', 'width', 'style', 'target', 'listing', 'container', 'score', 'meter', 'img', 'text', 'icons', 'spa', 'high', 'light', 'el']
                 stop_words += ['bed', 'room', 'bedroom', 'apartment', 'kitchen', 'we', 'home', 'can', 'one', 'located', 'guests', 'guest', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'just', 'well', 'area', 'two', 'three', 'like', 'stay', 'will', 'also', 'living']
 
                 for listing in output: 
