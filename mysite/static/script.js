@@ -1,4 +1,4 @@
-var isPrototype = true;
+var isPrototype = false;
 var isHighlighted = false;
 
 $(document).on('click', '#proto', function() { 
@@ -6,6 +6,7 @@ $(document).on('click', '#proto', function() {
     isPrototype = !isPrototype
     if(isPrototype){
         $('.version').text('Prototype')
+        window.location = "https://airbnb-similar-listings.herokuapp.com/pt";
     }
     else{
         $('.version').text('Final')

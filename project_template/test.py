@@ -121,7 +121,7 @@ def similarity(data, reviews, extracted, input_amenities):
 	    	sub_dict['sim_score'] = sim*100
 	    	sub_dict['sim_score_rounded'] = round(sim*100,2)
 	    	sub_dict['amenities'] = sub_dict['amenities'].replace('{','').replace('}','').replace('"','').replace(',',', ')
-	    	sim_amenities = ', '.join(list(set(sub_dict['amenities'].split(', ')) & set(input_amenities)))
+	    	sim_amenities = list(set(sub_dict['amenities'].split(', ')) & set(input_amenities))
 	    	sub_dict['sim_amenities'] = sim_amenities
 
 	    	top_ten_listings.append(sub_dict)
