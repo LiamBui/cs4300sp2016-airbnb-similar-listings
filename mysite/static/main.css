@@ -112,6 +112,7 @@ a.btn a:hover{
 	margin-bottom: 0px;
 	position: relative;
 	top: 16%;
+	left: 3%;
 }
 
 .listing-price span, .result-price span{
@@ -174,6 +175,10 @@ a.btn a:hover{
 .toggle-button-selected { 
 	background-color: #fd5c63; 
 	border: 2px solid #fd5c63; }
+.listing-error{
+	margin-top: 15px;
+	color: #fd5c63;
+}
 .toggle-button-selected button { 
 	left: 14px; 
 	top: -1; 

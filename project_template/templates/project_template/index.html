@@ -42,11 +42,12 @@
             
             <div class="form-group">
                 <input id="input" type="text" name="AirbnbURL" class="form-control" placeholder="Paste an Airbnb URL here" value="{{ listing_url }}">
+            </div>
+            <button type="submit" class="btn btn-info"> Go! </button>
+            <br>
                 {% if error %}
                     <div class="listing-error">  {{error }}  </div>
                 {% endif %}
-            </div>
-            <button type="submit" class="btn btn-info"> Go! </button>
         </div>
         </form>
 
