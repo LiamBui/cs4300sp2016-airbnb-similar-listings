@@ -1,5 +1,5 @@
 var isPrototype = false;
-var isHighlighted = false;
+var isHighlighted = true;
 
 $(document).on('click', '#proto', function() { 
     $(this).toggleClass('toggle-button-selected'); 
@@ -33,6 +33,7 @@ var lesstext = "&nbsp;[Show Less]";
     
 $(document).ready(function(){
     // $(window).bind('scroll', loadOnScroll);
+    $('.highlights').addClass('highlight');
     if(orig_room_type == 'Entire home/apt'){
         $('#roomtype_icon').attr("src", '/static/entirehome.png');
         $('#orig-roomtype').text('Entire Home/Apt');
