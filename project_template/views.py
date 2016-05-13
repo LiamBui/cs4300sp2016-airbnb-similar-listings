@@ -106,6 +106,7 @@ def index(request):
     error = ""
     output_list = ''
     output = ''
+    top_terms = {}
     orig_listing = {}
     search = ''
     page_objects = []
@@ -136,7 +137,9 @@ def index(request):
                 extracted_data = extract_listing_feature(data['listing'])
 
                 # This is the function that returns the final list with all three components combined
-                output = similarity(data['listing'], listing_reviews, extracted_data, data['listing']['amenities'])
+                sim_calc = similarity(data['listing'], listing_reviews, extracted_data, data['listing']['amenities'])
+                output = sim_calc[0]
+                top_terms = sim_calc[1]
                 
                 orig_listing = {k: data['listing'][k] for k in ('room_type', 'description', 'price', 'bedrooms', 'person_capacity', 'space', 'name','thumbnail_url', 'amenities')}
                 orig_listing['listing_url'] = search
@@ -179,7 +182,7 @@ def index(request):
                 '''
             except:
                 error = 'An error has ocurred in our system, please try another listing'
-                return render_to_response('project_template/index.html',{'listing_url':search, 'orig_listing': orig_listing,'output': page_objects,'magic_url': request.get_full_path(), 'error':error})
+                return render_to_response('project_template/index.html',{'listing_url':search, 'orig_listing': orig_listing,'output': page_objects,'magic_url': request.get_full_path(), 'error':error, 'top_terms': top_terms})
 
         else:
             page_number = request.GET.get('page_number');
@@ -188,4 +191,4 @@ def index(request):
             except InvalidPage:
                 return HttpResponseBadRequest()
             return HttpResponse(json.dumps(page_objects), content_type="application/json")
-    return render_to_response('project_template/index.html',{'listing_url':search, 'orig_listing': orig_listing,'output': page_objects,'magic_url': request.get_full_path(), 'error':error})
+    return render_to_response('project_template/index.html',{'listing_url':search, 'orig_listing': orig_listing,'output': page_objects,'magic_url': request.get_full_path(), 'error':error, 'top_terms': top_terms})

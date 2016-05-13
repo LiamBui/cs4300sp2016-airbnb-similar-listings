@@ -26,12 +26,15 @@ def desc_tfidf_initialization():
 		sf_descript_dict[d] = sf[d]['description']+" "+sf[d]['space']
 
 	sf_listing_index_to_id = {index:listing_id for index, listing_id in enumerate([d for d in sf_descript_dict])}
+	sf_id_to_listing_index = {listing_id:index for index, listing_id in enumerate([d for d in sf_descript_dict])}
+	sf_descript_arr = [sf_descript_dict[d] for d in sf_descript_dict]
 	sf_descript_arr = [sf_descript_dict[d] for d in sf_descript_dict]
 
 	return {
     		"sf": sf,
     		"sf_listing_index_to_id": sf_listing_index_to_id,
-    		"sf_descript_arr": sf_descript_arr
+    		"sf_descript_arr": sf_descript_arr,
+    		"sf_id_to_index": sf_id_to_listing_index
     	}
 
 def lda_initialization():

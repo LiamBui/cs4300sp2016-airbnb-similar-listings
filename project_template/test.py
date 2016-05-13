@@ -41,6 +41,8 @@ def find_similar_descript(input_description):
 
 	listing_by_vocab = tfidf_vec.fit_transform([input_description]+desc_tfidf["sf_descript_arr"])
 
+	terms = tfidf_vec.get_feature_names()
+
 	listing_index_to_id = desc_tfidf["sf_listing_index_to_id"]
 
 	sim_list = cosine_similarity(listing_by_vocab[0], listing_by_vocab)[0]
@@ -49,7 +51,8 @@ def find_similar_descript(input_description):
 	for index, listing_id in listing_index_to_id.iteritems():
 		results[listing_id] = sim_list[index+1]
 
-	return results
+	return (results, listing_by_vocab, terms)
+
 
 def find_similar_features(data, listing_id):
 	sf_data = urls.feature_data
@@ -87,9 +90,12 @@ def lda_reviews(v):
 
 def similarity(data, reviews, extracted, input_amenities):
 	feature_sim = find_similar_features(extracted, data['id'])
-	descript_sim = find_similar_descript(data['description'] + " " + data['space'])
+	descript_data = find_similar_descript(data['description'] + " " + data['space'])
+	descript_sim = descript_data[0]
 	lda_results = lda_reviews(reviews)
 	min_accom = data['person_capacity']
+	#pass in the tf_idf matrix
+	tf_idf_matrix = descript_data[1]
 
 	desc_tfidf = urls.desc_tfidf
 	combined = {}
@@ -109,6 +115,22 @@ def similarity(data, reviews, extracted, input_amenities):
 	top_ten_idx = ranked_list[:200] #first element is the input listing itself
 	top_ten_listings = []  #top ten listings and their data
 
+	# BEGIN TFIDF WORDS FOR WORD CLOUD
+	k = 10
+	n = 50
+	terms = descript_data[2]
+	tf_idf_matrix = tf_idf_matrix.toarray()
+	dot_prod = tf_idf_matrix[0]
+	# for i,sim in top_ten_idx[1:k]:
+	# 	list_id = full_data[i]['id']
+	# 	index = desc_tfidf["sf_id_to_index"][list_id]
+	# 	#get listing id
+	# 	dot_prod = dot_prod*tf_idf_matrix[index]
+	indices = np.argsort(dot_prod)[::-1][:n]
+	term_scores = {terms[i]:dot_prod[i] for i in indices}
+
+
+
 	# TO LAURA AND LIAM
 	# sim here is the actual score, not used yet, but you guys can make it a part of 
 	# the result returned
@@ -125,7 +147,7 @@ def similarity(data, reviews, extracted, input_amenities):
 	    	sub_dict['sim_amenities'] = sim_amenities
 
 	    	top_ten_listings.append(sub_dict)
-	return top_ten_listings
+	return top_ten_listings, term_scores
 
 
 
