@@ -129,7 +129,7 @@ def similarity(data, reviews, extracted, input_amenities):
 	 	t = orig*tf_idf_matrix[index+1]
 	 	res = res + t
 	indices = np.argsort(res)[::-1][:n]
-	term_scores = {terms[i]:res[i] for i in indices}
+	term_scores = {terms[i]:res[i]*50 for i in indices}
 
 
 

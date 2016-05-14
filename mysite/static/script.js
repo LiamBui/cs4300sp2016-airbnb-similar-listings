@@ -53,11 +53,12 @@ $(document).ready(function(){
     $('#bedroom_icon').attr("src", '/static/bedrooms.png');
     $('#orig-bed').text('Bedrooms: ' + orig_beds);
 
-    console.log(top_terms);
+    var top_terms_json = JSON.parse(top_terms.replace(/&quot;/g, '"'));
 
-    for (var key in top_terms){
-        word_array.push({text: key, weight: top_terms[key]})
+    for (var key in top_terms_json){
+        word_array.push({text: key, weight: (parseInt(top_terms_json[key]))})
     };
+
     $('#word-cloud').jQCloud(word_array);
 
      // Configure/customize these variables.

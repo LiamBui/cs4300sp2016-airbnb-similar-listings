@@ -139,7 +139,8 @@ def index(request):
                 # This is the function that returns the final list with all three components combined
                 sim_calc = similarity(data['listing'], listing_reviews, extracted_data, data['listing']['amenities'])
                 output = sim_calc[0]
-                top_terms = sim_calc[1]
+                top_terms1 = sim_calc[1]
+                top_terms = json.dumps(top_terms1, ensure_ascii = False)
                 
                 orig_listing = {k: data['listing'][k] for k in ('room_type', 'description', 'price', 'bedrooms', 'person_capacity', 'space', 'name','thumbnail_url', 'amenities')}
                 orig_listing['listing_url'] = search
