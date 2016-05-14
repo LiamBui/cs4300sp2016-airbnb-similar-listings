@@ -30,8 +30,10 @@ var showChar = 210;  // How many characters are shown by default
 var ellipsestext = "...";
 var moretext = "&nbsp;[Show More]";
 var lesstext = "&nbsp;[Show Less]";
+var word_array = [];
     
 $(document).ready(function(){
+    $("#word-cloud").jQCloud(word_array);
     // $(window).bind('scroll', loadOnScroll);
     $('.highlights').addClass('highlight');
     if(orig_room_type == 'Entire home/apt'){
@@ -50,6 +52,13 @@ $(document).ready(function(){
     $('#orig-accom').text('Accommodates: ' + orig_accomm);
     $('#bedroom_icon').attr("src", '/static/bedrooms.png');
     $('#orig-bed').text('Bedrooms: ' + orig_beds);
+
+    console.log(top_terms);
+
+    for (var key in top_terms){
+        word_array.push({text: key, weight: top_terms[key]})
+    };
+    $('#word-cloud').jQCloud(word_array);
 
      // Configure/customize these variables.
 

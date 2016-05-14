@@ -2,14 +2,17 @@
     <head>
         <link rel="stylesheet" href="/static/bootstrap.min.css">
         <link rel="stylesheet" href="/static/main.css">
+        <link rel="stylesheet" type="text/css" href="/static/jqcloud.css" />
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
         <script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
         <script src="/static/script.js"></script>
+        <script type="text/javascript" src="/static/jqcloud-1.0.4.min.js"></script>
         <script type="text/javascript"> 
             var orig_room_type = "{{orig_listing.room_type}}";
             var orig_accomm = '{{ orig_listing.accommodates }}';
             var orig_beds = '{{ orig_listing.bedrooms }}';
             var output = '{{ output }}';
+            var top_terms = '{{top_terms}}';
         </script>
     </head>
     
@@ -99,10 +102,9 @@
             </div>
             {% endif %}
 
-            <div class = "word-cloud">
-                <div class = "listing-container">
-                    {{top_terms}}
-                </div>
+            <div class = "listing-container">
+                <div id = "word-cloud">
+                </div> 
             </div>
 
             <div class="results-container">

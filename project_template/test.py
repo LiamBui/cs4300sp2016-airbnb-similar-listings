@@ -116,18 +116,20 @@ def similarity(data, reviews, extracted, input_amenities):
 	top_ten_listings = []  #top ten listings and their data
 
 	# BEGIN TFIDF WORDS FOR WORD CLOUD
-	k = 10
-	n = 50
+	k = 15
+	n = 20
 	terms = descript_data[2]
 	tf_idf_matrix = tf_idf_matrix.toarray()
-	dot_prod = tf_idf_matrix[0]
-	# for i,sim in top_ten_idx[1:k]:
-	# 	list_id = full_data[i]['id']
-	# 	index = desc_tfidf["sf_id_to_index"][list_id]
-	# 	#get listing id
-	# 	dot_prod = dot_prod*tf_idf_matrix[index]
-	indices = np.argsort(dot_prod)[::-1][:n]
-	term_scores = {terms[i]:dot_prod[i] for i in indices}
+	res = tf_idf_matrix[0]
+	orig = tf_idf_matrix[0]
+	for i,sim in top_ten_idx[1:k]:
+	 	list_id = full_data[i]['id']
+	 	index = desc_tfidf["sf_id_to_index"][list_id]
+	 	#get listing id
+	 	t = orig*tf_idf_matrix[index+1]
+	 	res = res + t
+	indices = np.argsort(res)[::-1][:n]
+	term_scores = {terms[i]:res[i] for i in indices}
 
 
 
