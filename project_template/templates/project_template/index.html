@@ -29,7 +29,7 @@
             <p align="left">Final</p>
         </div>
 
-        <div class="toggle-button" id="highlight-sim">
+        <div class="toggle-button toggle-button-selected" id="highlight-sim">
             <button></button>
             <p align="left" id="highlight-label">Highlight</p>
         </div>
@@ -100,15 +100,18 @@
                     <br>
                 </div>
             </div>
+
             {% endif %}
+
+            <div class="results-container">
+            {% if output %}
 
             <div class = "listing-container">
                 <div id = "word-cloud">
                 </div> 
             </div>
 
-            <div class="results-container">
-            {% if output %}
+            <br>
             <h1>Search Results</h1><br>
             {% for listing in output %}
                 <div class = "listing-container">
