@@ -117,7 +117,7 @@ def similarity(data, reviews, extracted, input_amenities):
 
 	# BEGIN TFIDF WORDS FOR WORD CLOUD
 	k = 15
-	n = 25
+	n = 35
 	terms = descript_data[2]
 	tf_idf_matrix = tf_idf_matrix.toarray()
 	res = tf_idf_matrix[0]
