@@ -33,7 +33,6 @@ var lesstext = "&nbsp;[Show Less]";
 var word_array = [];
     
 $(document).ready(function(){
-    $("#word-cloud").jQCloud(word_array);
     // $(window).bind('scroll', loadOnScroll);
     $('.highlights').addClass('highlight');
     if(orig_room_type == 'Entire home/apt'){
@@ -56,7 +55,8 @@ $(document).ready(function(){
     var top_terms_json = JSON.parse(top_terms.replace(/&quot;/g, '"'));
 
     for (var key in top_terms_json){
-        word_array.push({text: key, weight: (parseInt(top_terms_json[key]))})
+        console.log(key);
+        word_array.push({text: key, weight: (parseInt(top_terms_json[key]))});
     };
 
     $('#word-cloud').jQCloud(word_array);

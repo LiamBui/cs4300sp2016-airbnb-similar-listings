@@ -117,19 +117,26 @@ def similarity(data, reviews, extracted, input_amenities):
 
 	# BEGIN TFIDF WORDS FOR WORD CLOUD
 	k = 15
-	n = 20
+	n = 25
 	terms = descript_data[2]
 	tf_idf_matrix = tf_idf_matrix.toarray()
 	res = tf_idf_matrix[0]
 	orig = tf_idf_matrix[0]
+	stop_words = get_stop_words('en')
+	stop_words += ['bed', 'room', 'bedroom', 'apartment', 'kitchen', 'we', 'home', 'can', 'one', 'located', 'guests', 'guest','0', '1', '2', '3', '4', '5', '6', '7', '8', '9','100', 'just', 'well', 'area', 'two', 'three', 'like', 'stay', 'will', 'also', 'living', 'll']
 	for i,sim in top_ten_idx[1:k]:
 	 	list_id = full_data[i]['id']
 	 	index = desc_tfidf["sf_id_to_index"][list_id]
 	 	#get listing id
 	 	t = orig*tf_idf_matrix[index+1]
 	 	res = res + t
-	indices = np.argsort(res)[::-1][:n]
-	term_scores = {terms[i]:res[i]*50 for i in indices}
+	indices = np.argsort(res)[::-1]
+	counter = 0
+	term_scores = {}
+	for i in indices:
+		if(terms[i] not in stop_words and counter<n):
+			term_scores[terms[i]] = res[i]*50
+			counter+=1
 
 
 

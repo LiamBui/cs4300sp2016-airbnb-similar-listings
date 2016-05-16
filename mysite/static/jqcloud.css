@@ -1,8 +1,8 @@
 /* fonts */
 
 div.jqcloud {
-  font-family: "Helvetica", "Arial", sans-serif;
-  font-size: 10px;
+  font-family: Futura;
+  font-size: 12px;
   line-height: normal;
 }
 
@@ -28,16 +28,16 @@ div.jqcloud { color: #09f; }
 div.jqcloud a { color: inherit; }
 div.jqcloud a:hover { color: #0df; }
 div.jqcloud a:hover { color: #0cf; }
-div.jqcloud span.w10 { color: #0cf; }
-div.jqcloud span.w9 { color: #0cf; }
-div.jqcloud span.w8 { color: #0cf; }
-div.jqcloud span.w7 { color: #39d; }
-div.jqcloud span.w6 { color: #90c5f0; }
-div.jqcloud span.w5 { color: #90a0dd; }
-div.jqcloud span.w4 { color: #90c5f0; }
-div.jqcloud span.w3 { color: #a0ddff; }
-div.jqcloud span.w2 { color: #99ccee; }
-div.jqcloud span.w1 { color: #aab5f0; }
+div.jqcloud span.w10 { color: #fd5c63; }
+div.jqcloud span.w9 { color: #fd5c63; }
+div.jqcloud span.w8 { color: #fd686f; }
+div.jqcloud span.w7 { color: #fd686f; }
+div.jqcloud span.w6 { color: #fe8187; }
+div.jqcloud span.w5 { color: #fe8187; }
+div.jqcloud span.w4 { color: #fe9a9f; }
+div.jqcloud span.w3 { color: #fe9a9f; }
+div.jqcloud span.w2 { color: #feb3b7; }
+div.jqcloud span.w1 { color: #feb3b7; }
 
 /* layout */
 
@@ -46,4 +46,4 @@ div.jqcloud {
   position: relative;
 }
 
-div.jqcloud span { padding: 0; }
+div.jqcloud span { padding: 3px; }

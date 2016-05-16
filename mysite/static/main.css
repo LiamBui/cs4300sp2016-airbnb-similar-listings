@@ -282,7 +282,7 @@ a.btn a:hover{
 }
 #word-cloud{
 	height: 300px;
-	width: inherit;
+	width: 100%;
 }
 
 
